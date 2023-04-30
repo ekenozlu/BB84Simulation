@@ -1,6 +1,8 @@
 import tkinter as tk
+import textwrap
 import numpy as np
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, execute, BasicAer
+from PIL import Image, ImageTk
 
 n = 16
 quantumRegister = QuantumRegister(n, name='qr')
@@ -11,23 +13,121 @@ measurementList = []
 
 class FirstFrame(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=800, height=800)
+        tk.Frame.__init__(self, master, width=600, height=500, background='navy')
         self.pack()
 
         self.start_button = tk.Button(self, text="Start Simulation", command=self.switch_to_second_frame)
         self.start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        self.information_button = tk.Button(self, text="Learn About BB84 Protocol! ", command=self.show_info_frame)
+        self.information_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
     def switch_to_second_frame(self):
         self.pack_forget()
         second_frame.pack()
         bb84Simulation()
 
+    def show_info_frame(self):
+        self.pack_forget()
+        info_frame.pack()
+
+
+class InfoFrame(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master, width=600, height=500, background='grey')
+        self.pack()
+
+        # Add other widgets to the frame as needed
+        top_frame = tk.Frame(self)
+        top_frame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.NW)
+        # Create "Back" button
+        self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_first_frame)
+        self.back_button.pack(side=tk.LEFT)
+        # Create "Next" button
+        self.next_button = tk.Button(top_frame, text="Next", command=self.switch_to_info2)
+        self.next_button.pack(side=tk.RIGHT)
+
+        # Add text label
+        text = "Quantum Key Distribution (QKD) is a method for securely distributing cryptographic keys between two parties - Alice and Bob - by using the principles of quantum mechanics. The BB84 protocol is one of the most well-known QKD protocols, developed by Charles Bennett and Gilles Brassard in 1984. The BB84 protocol works by using two quantum bits (qubits) - one to transmit the key and the other to verify its integrity. Alice randomly encodes the bits she wants to send to Bob using one of four possible states, which are chosen from two different bases. Each state represents a specific bit value, either a 0 or a 1. Bob then receives the encoded qubits and measures them in one of the two bases, chosen randomly. Once Bob has measured the qubits, Alice and Bob publicly compare the bases they used. If they used the same basis, Bob's measurement result reveals the value of the corresponding bit, and they can use it to form their shared secret key. If they used different bases, they discard the bit value and repeat the process until enough bits are obtained.The security of the BB84 protocol comes from the fact that any attempt to eavesdrop on the transmission will inevitably introduce errors that can be detected by Alice and Bob. According to the principles of quantum mechanics, any attempt to observe or measure a qubit will change its state, which can be detected by the parties. Thus, if an eavesdropper tries to intercept the qubits, they will introduce errors that will be detected during the verification process, allowing Alice and Bob to discard the affected bits and prevent the eavesdropper from obtaining any information about the key. QKD, and specifically the BB84 protocol, provides a method for securely distributing cryptographic keys that is resistant to interception or tampering. While still in its early stages of development, QKD has the potential to revolutionize the way in which secure communications are established and maintained, and it is an exciting area of research in both physics and computer science."
+        wrapper = textwrap.TextWrapper(width=100)  # set the maximum width for each line
+        wrapped_text = wrapper.fill(text)
+        text_label = tk.Label(self, text=wrapped_text, width=300,height=500, justify="center", anchor="w", background="grey")
+        text_label.pack(side=tk.TOP, padx=10, pady=10)
+
+    def show_info_frame(self):
+        # Hide any previously shown frames
+        self.hide_all_frames()
+        # Add the info_frame to the main window
+        self.pack()
+
+    def hide_all_frames(self):
+        # Hide all frames in the main window
+        self.pack_forget()
+
+    def switch_to_first_frame(self):
+        self.pack_forget()
+        measurementList.clear()
+        first_frame.pack()
+
+    def switch_to_info2(self):
+        # Hide all frames in the main window
+        self.hide_all_frames()
+        self.pack_forget()
+        info_frame2.pack()
+
+class InfoFrame2(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master, width=600, height=500, background='white')
+        self.pack()
+
+        # Add other widgets to the frame as needed
+        top_frame = tk.Frame(self)
+        top_frame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.NW)
+        # Create "Back" button
+        self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_info1)
+        self.back_button.pack(side=tk.LEFT)
+        # Create "Next" button
+        self.next_button = tk.Button(top_frame, text="Return to Homepage", command=self.switch_to_first_frame)
+        self.next_button.pack(side=tk.RIGHT)
+        # Load and resize the image
+        image = Image.open('imagee.jpeg')
+        image = image.resize((600,435), Image.LANCZOS)
+
+        # Convert the image to a Tkinter-compatible format
+        photo = ImageTk.PhotoImage(image)
+
+        # Create a label to display the image
+        image_label = tk.Label(self, image=photo)
+        image_label.image = photo  # Keep a reference to the photo to avoid garbage collection
+
+        # Add the label to the frame
+        image_label.pack(side=tk.BOTTOM, padx=10, pady=10, anchor=tk.CENTER)
+
+    def show_info_frame2(self):
+        # Hide any previously shown frames
+        self.hide_all_frames()
+
+        # Add the info_frame to the main window
+        self.pack()
+
+    def hide_all_frames(self):
+        # Hide all frames in the main window
+        self.pack_forget()
+
+    def switch_to_first_frame(self):
+        self.pack_forget()
+        first_frame.pack()
+
+    def switch_to_info1(self):
+        # Hide all frames in the main window
+        self.pack_forget()
+        info_frame.pack()
+
 
 class SecondFrame(tk.Frame):
     currentSimStage = 0
 
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=800, height=800)
+        tk.Frame.__init__(self, master, width=600, height=500)
         self.pack()
 
         # Create top frame for the "Back" button
@@ -76,7 +176,7 @@ class SecondFrame(tk.Frame):
 
         # Alice's Bit
         defLabel1 = tk.Label(frame, text=measurementList[self.currentSimStage-1].aliceBit)
-        defLabel1.grid(row=1, column=0, padx=10, pady=10,sticky=tk.N)
+        defLabel1.grid(row=1, column=0, padx=10, pady=10)
 
         # Alice's Bases
         defLabel2 = tk.Label(frame, text=measurementList[self.currentSimStage-1].aliceBase)
@@ -263,6 +363,14 @@ if __name__ == "__main__":
     second_frame = SecondFrame(root)
     second_frame.pack_propagate(False)
     second_frame.pack_forget()  # Hide second frame initially
+
+    info_frame = InfoFrame(root)
+    info_frame.pack_propagate(False)
+    info_frame.pack_forget()
+
+    info_frame2 = InfoFrame2(root)
+    info_frame2.pack_propagate(False)
+    info_frame2.pack_forget()
 
     # Start the tkinter event loop
     root.mainloop()
