@@ -14,6 +14,15 @@ classicalRegister = ClassicalRegister(n, name='cr')
 measurementList = []
 
 
+class simInfoClass:
+    def __int__(self):
+        self.aliceKeys = None
+        self.aliceBases = None
+
+
+info = simInfoClass()
+
+
 class FirstFrame(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background='navy')
@@ -101,8 +110,9 @@ class InfoFrame2(tk.Frame):
         # Create "Next" button
         self.nextButton = tk.Button(topFrame, text="Return to Homepage", command=self.goToFirstPage)
         self.nextButton.pack(side=tk.RIGHT)
+
         # Load and resize the image
-        image = Image.open('imagee.jpeg')
+        image = Image.open('./assets/imagee.jpeg')
         image = image.resize((600, 435), Image.LANCZOS)
 
         # Convert the image to a Tkinter-compatible format
@@ -110,7 +120,7 @@ class InfoFrame2(tk.Frame):
 
         # Create a label to display the image
         imageLabel = tk.Label(self, image=photo)
-        imageLabel.image = photo  # Keep a reference to the photo to avoid garbage collection
+        imageLabel.image = photo
 
         # Add the label to the frame
         imageLabel.pack(side=tk.BOTTOM, padx=10, pady=10, anchor=tk.CENTER)
@@ -173,22 +183,49 @@ class SecondFrame(tk.Frame):
         bottomFrame.pack(fill=tk.BOTH)
 
         # Create "Next" button
-        self.nextButton = tk.Button(bottomFrame, text="Next", command=self.show_next_frame)
+        self.nextButton = tk.Button(bottomFrame, text="Next", command=self.showNextFrame)
         self.nextButton.pack(anchor=tk.S)
 
-        #Create Frame List for measurement frames
+        # Create Frame List for measurement frames
         self.frameList = []
 
     def createSimInfoFrame(self):
-        frame = tk.Frame(self.canvas)
-        frame.pack(ipadx=50, ipady=50)
-        frame.pack_propagate(False)
+        mainFrame = tk.Frame(self.canvas, width=600, bg="yellow")
+        mainFrame.pack()
+        # frame.pack_propagate(False)
 
-        text = "Alice BB84 ŞÖYLEDİR BÖYLEDİR ŞİMD BURDAN BÖYLEDİR SONRA FİZİKSEL KANAL FALAN FİLAN FİSO BOB EVE BLABLA DEMEDEN DEVAM EDER GİDER EDER ÇOK DA MÜHİM DEĞİL BLABLA"
-        message = tk.Message(frame,text=text,width=600)
-        message.grid(row=0,column=0)
+        topFrame = tk.Frame(mainFrame)
+        topFrame.pack(fill=tk.BOTH)
+        bitsText = "As information page about protocol, at first Alice generates a random set of bits. This time Alice's random bits are:"
+        bitsDescription = tk.Message(topFrame, text=bitsText, justify="center", width=600)
+        bitsDescription.pack()
+        bitsLabel = tk.Label(topFrame, text=info.aliceKeys, justify="center", anchor="center", font=("Arial", 25))
+        bitsLabel.pack()
 
-        self.frameList.append(frame)
+        baseText = "After that, Alice sends photons to Bob on different bases in quantum channel, Alice's bases are:"
+        baseDescription = tk.Message(topFrame, text=baseText, justify="center", width=600)
+        baseDescription.pack()
+
+        baseFrame = tk.Frame(mainFrame,bg="white",height=250)
+        baseFrame.pack(fill=tk.BOTH,expand=True,ipadx=5)
+        baseFrame.pack_propagate(False)
+
+        i = 0
+        for base in info.aliceBases:
+            imageName = './assets/diagonalbase.png' if base == "X" else './assets/rectilinearbase.png'
+            #img = Image.open(imageName)
+            #img.resize((40,40),Image.LANCZOS)
+
+            img = tk.PhotoImage(file=imageName)
+            imgLabel = tk.Label(baseFrame, image=img,padx=5,bg="red")
+            imgLabel.pack(side=tk.RIGHT)
+            i =+ 1
+
+
+        # baseLabel = tk.Label(frame, text=info.aliceBases, justify="center", anchor="center", font=("Arial", 25))
+        # baseLabel.pack()
+
+        self.frameList.append(mainFrame)
 
     def createSimFrame(self):
         frame = tk.Frame(self.canvas)
@@ -240,20 +277,21 @@ class SecondFrame(tk.Frame):
         # Put Frame into list
         self.frameList.append(frame)
 
-    def show_next_frame(self):
+    def showNextFrame(self):
         # Increment the currentSimStage
         self.currentSimStage += 1
 
         if self.currentSimStage == 1:
             self.createSimInfoFrame()
+            self.canvas.create_window(380, 150, anchor="center", window=self.frameList[0])
         else:
             self.createSimFrame()
+            self.canvas.create_window(380, 300 + ((self.currentSimStage - 2) * 100),
+                                      anchor="center",
+                                      window=self.frameList[self.currentSimStage - 1],
+                                      tags="measurementFrame")
 
         # Put Frame in window at canvas
-        self.canvas.create_window(380, 100 + ((self.currentSimStage-1) * 100),
-                                  anchor="center",
-                                  window=self.frameList[self.currentSimStage-1],
-                                  tags="measurementFrame")
 
     def goToFirstPage(self):
         # Clear the data about previous simulation
@@ -389,6 +427,9 @@ def bb84Simulation():
         print("Key exchange has been tampered! Check for eavesdropper or try again")
         print("New Alice's key is invalid: ", newAliceKey)
         print("New Bob's key is invalid: ", newBobKey)
+
+    simInfoClass.aliceKeys = aliceKey
+    simInfoClass.aliceBases = aliceTable
 
 
 if __name__ == "__main__":
