@@ -206,9 +206,9 @@ class SecondFrame(tk.Frame):
         baseDescription = tk.Message(topFrame, text=baseText, justify="center", width=600)
         baseDescription.pack()
 
-        baseFrame = tk.Frame(mainFrame,bg="white",height=250)
+        baseFrame = tk.Frame(mainFrame)
         baseFrame.pack(fill=tk.BOTH,expand=True,ipadx=5)
-        baseFrame.pack_propagate(False)
+        #baseFrame.pack_propagate(False)
 
         i = 0
         for base in info.aliceBases:
@@ -217,8 +217,9 @@ class SecondFrame(tk.Frame):
             #img.resize((40,40),Image.LANCZOS)
 
             img = tk.PhotoImage(file=imageName)
-            imgLabel = tk.Label(baseFrame, image=img,padx=5,bg="red")
-            imgLabel.pack(side=tk.RIGHT)
+            imgLabel = tk.Label(baseFrame, image=img,padx=5)
+            imgLabel.image = img
+            imgLabel.pack(side=tk.LEFT)
             i =+ 1
 
 
@@ -254,7 +255,11 @@ class SecondFrame(tk.Frame):
         defLabel1.grid(row=1, column=0)
 
         # Alice's Bases
-        defLabel2 = tk.Label(frame, text=measurementList[self.currentSimStage - 1].aliceBase)
+        aliceImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 1].aliceBase == "X" \
+                                                    else './assets/rectilinearbase.png'
+        aliceImg = tk.PhotoImage(file=aliceImgPath)
+        defLabel2 = tk.Label(frame,image=aliceImg)
+        defLabel2.image = aliceImg
         defLabel2.grid(row=1, column=1)
 
         message = ("Same Base Choice for Alice and Bob, Bit added to the key"
@@ -264,7 +269,12 @@ class SecondFrame(tk.Frame):
         defLabel3 = tk.Message(frame, text=message, width=300, justify="center")
         defLabel3.grid(row=1, column=2)
 
-        defLabel4 = tk.Label(frame, text=measurementList[self.currentSimStage - 1].bobBase)
+        bobImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 1].bobBase == "X" \
+            else './assets/rectilinearbase.png'
+        bobImg = tk.PhotoImage(file=bobImgPath)
+
+        defLabel4 = tk.Label(frame,image=bobImg)
+        defLabel4.image = bobImg
         defLabel4.grid(row=1, column=3)
 
         text = (measurementList[self.currentSimStage - 1].aliceBit
