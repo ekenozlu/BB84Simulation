@@ -41,8 +41,8 @@ class InfoFrame(tk.Frame):
         self.pack()
 
         # Top Frame for buttons
-        top_frame = tk.Frame(self,bg="grey")
-        top_frame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.N,fill=tk.BOTH)
+        top_frame = tk.Frame(self, bg="grey")
+        top_frame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.N, fill=tk.BOTH)
 
         # Create "Back" button
         self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_first_frame)
@@ -52,18 +52,18 @@ class InfoFrame(tk.Frame):
         self.next_button.pack(side=tk.RIGHT)
 
         # Frame for Information
-        mid_frame = tk.Frame(self,bg="grey")
-        mid_frame.pack(anchor=tk.CENTER,fill=tk.BOTH,expand=True)
+        mid_frame = tk.Frame(self, bg="grey")
+        mid_frame.pack(anchor=tk.CENTER, fill=tk.BOTH, expand=True)
 
         # Add text label
         text = "Quantum Key Distribution (QKD) is a method for securely distributing cryptographic keys between two parties - Alice and Bob - by using the principles of quantum mechanics. The BB84 protocol is one of the most well-known QKD protocols, developed by Charles Bennett and Gilles Brassard in 1984. The BB84 protocol works by using two quantum bits (qubits) - one to transmit the key and the other to verify its integrity. Alice randomly encodes the bits she wants to send to Bob using one of four possible states, which are chosen from two different bases. Each state represents a specific bit value, either a 0 or a 1. Bob then receives the encoded qubits and measures them in one of the two bases, chosen randomly. Once Bob has measured the qubits, Alice and Bob publicly compare the bases they used. If they used the same basis, Bob's measurement result reveals the value of the corresponding bit, and they can use it to form their shared secret key. If they used different bases, they discard the bit value and repeat the process until enough bits are obtained.The security of the BB84 protocol comes from the fact that any attempt to eavesdrop on the transmission will inevitably introduce errors that can be detected by Alice and Bob. According to the principles of quantum mechanics, any attempt to observe or measure a qubit will change its state, which can be detected by the parties. Thus, if an eavesdropper tries to intercept the qubits, they will introduce errors that will be detected during the verification process, allowing Alice and Bob to discard the affected bits and prevent the eavesdropper from obtaining any information about the key. QKD, and specifically the BB84 protocol, provides a method for securely distributing cryptographic keys that is resistant to interception or tampering. While still in its early stages of development, QKD has the potential to revolutionize the way in which secure communications are established and maintained, and it is an exciting area of research in both physics and computer science."
-        text_message = tk.Message(mid_frame,text=text,width=600,justify="center",bg="grey")
+        text_message = tk.Message(mid_frame, text=text, width=600, justify="center", bg="grey")
         text_message.pack(side=tk.TOP)
 
-        #wrapper = textwrap.TextWrapper(width=100)  # set the maximum width for each line
-        #wrapped_text = wrapper.fill(text)
-        #text_label = tk.Label(mid_frame, text=wrapped_text, width=300,height=500, justify="center", anchor="w", background="grey")
-        #text_label.pack(side=tk.TOP, padx=10, pady=10)
+        # wrapper = textwrap.TextWrapper(width=100)  # set the maximum width for each line
+        # wrapped_text = wrapper.fill(text)
+        # text_label = tk.Label(mid_frame, text=wrapped_text, width=300,height=500, justify="center", anchor="w", background="grey")
+        # text_label.pack(side=tk.TOP, padx=10, pady=10)
 
     def show_info_frame(self):
         # Hide any previously shown frames
@@ -103,7 +103,7 @@ class InfoFrame2(tk.Frame):
         self.next_button.pack(side=tk.RIGHT)
         # Load and resize the image
         image = Image.open('imagee.jpeg')
-        image = image.resize((600,435), Image.LANCZOS)
+        image = image.resize((600, 435), Image.LANCZOS)
 
         # Convert the image to a Tkinter-compatible format
         photo = ImageTk.PhotoImage(image)
@@ -144,22 +144,22 @@ class SecondFrame(tk.Frame):
         self.pack()
 
         # Create top frame for the "Back" button
-        top_frame = tk.Frame(self,bg="green")
+        top_frame = tk.Frame(self, bg="green")
         top_frame.pack(fill=tk.BOTH)
 
         # Create "Back" button
         self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_first_frame)
-        self.back_button.grid(row=0,column=0,sticky="NW")
+        self.back_button.grid(row=0, column=0, sticky="NW")
         self.back_button.pack(anchor=tk.NW)
 
         # Create middle frame for simulation
-        mid_frame = tk.Frame(self,bg="yellow")
-        mid_frame.pack(fill=tk.BOTH,expand=True)
+        mid_frame = tk.Frame(self, bg="yellow")
+        mid_frame.pack(fill=tk.BOTH, expand=True)
         mid_frame.pack_propagate(False)
 
         # Create canvas for middle frame
         self.canvas = tk.Canvas(mid_frame, bg="blue", scrollregion=(0, 0, 0, 4000))
-        self.canvas.pack(fill=tk.BOTH, padx=1, pady=1,expand=True)
+        self.canvas.pack(fill=tk.BOTH, padx=1, pady=1, expand=True)
         self.canvas.pack_propagate(False)
 
         # Create Scrollbar for middle frame
@@ -169,15 +169,15 @@ class SecondFrame(tk.Frame):
         self.canvas.configure(yscrollcommand=scrollbar.set)
 
         # Create bottom frame for "Next" button
-        bottom_frame = tk.Frame(self,bg="red")
+        bottom_frame = tk.Frame(self, bg="red")
         bottom_frame.pack(fill=tk.BOTH)
 
         # Create "Next" button
-        self.next_button = tk.Button(bottom_frame, text="Next",command=self.show_next_frame)
+        self.next_button = tk.Button(bottom_frame, text="Next", command=self.show_next_frame)
         self.next_button.pack(anchor=tk.S)
 
-        # Create a list to store the frames
-        #self.frameList = []
+        #Create Frame List for measurement frames
+        self.frameList = []
 
     def create_frame(self):
         # Create a new frame inside the main frame
@@ -203,34 +203,32 @@ class SecondFrame(tk.Frame):
         # ---------------------------------------------------
 
         # Alice's Bit
-        defLabel1 = tk.Label(frame, text=measurementList[self.currentSimStage-1].aliceBit)
+        defLabel1 = tk.Label(frame, text=measurementList[self.currentSimStage - 1].aliceBit)
         defLabel1.grid(row=1, column=0)
 
         # Alice's Bases
-        defLabel2 = tk.Label(frame, text=measurementList[self.currentSimStage-1].aliceBase)
+        defLabel2 = tk.Label(frame, text=measurementList[self.currentSimStage - 1].aliceBase)
         defLabel2.grid(row=1, column=1)
 
         message = ("Same Base Choice for Alice and Bob, Bit added to the key"
-                   if measurementList[self.currentSimStage-1].result
+                   if measurementList[self.currentSimStage - 1].result
                    else
                    "Different base choice for Alice and Bob, no bit added to the key")
-        defLabel3 = tk.Message(frame, text=message,width=300,justify="center")
+        defLabel3 = tk.Message(frame, text=message, width=300, justify="center")
         defLabel3.grid(row=1, column=2)
 
-        defLabel4 = tk.Label(frame, text=measurementList[self.currentSimStage-1].bobBase)
+        defLabel4 = tk.Label(frame, text=measurementList[self.currentSimStage - 1].bobBase)
         defLabel4.grid(row=1, column=3)
 
-        text = (measurementList[self.currentSimStage-1].aliceBit
-                if measurementList[self.currentSimStage-1].result
+        text = (measurementList[self.currentSimStage - 1].aliceBit
+                if measurementList[self.currentSimStage - 1].result
                 else
                 "No Bit Received")
-        defLabel5 = tk.Message(frame, text=text,justify="center")
+        defLabel5 = tk.Message(frame, text=text, justify="center")
         defLabel5.grid(row=1, column=4)
 
-
-
-        # Put Frame in window at canvas
-        self.canvas.create_window(380,100+((self.currentSimStage-1)*200),window=frame)
+        # Put Frame into list
+        self.frameList.append(frame)
 
     def show_next_frame(self):
         # Increment the currentSimStage and set the previous button
@@ -239,13 +237,29 @@ class SecondFrame(tk.Frame):
         # Create a new frame and show it
         self.create_frame()
 
+        # Put Frame in window at canvas
+        self.canvas.create_window(380, 100 + ((self.currentSimStage - 1) * 100),
+                                  anchor="center",
+                                  window=self.frameList[self.currentSimStage -1],
+                                  tags="measurementFrame")
+
     def switch_to_first_frame(self):
+        # Clear the data about previous simulation
+        self.canvas.delete('measurementFrame')
+
+        measurementList.clear()
+        self.currentSimStage = 0
+
+        self.frameList.clear()
+
+
+        # Go To First Frame
         self.pack_forget()
         firstFrame.pack()
 
 
 class MeasurementFrame:
-    def __init__(self, qubitNo,aliceBit, aliceBase, bobBase, result):
+    def __init__(self, qubitNo, aliceBit, aliceBase, bobBase, result):
         self.qubitNo = qubitNo
         self.aliceBit = aliceBit
         self.aliceBase = aliceBase
@@ -285,7 +299,6 @@ def bb84Simulation():
     alice = QuantumCircuit(quantumRegister, classicalRegister, name='Alice')
     aliceKey = np.random.randint(0, high=2 ** n)
     aliceKey = np.binary_repr(aliceKey, n)
-    # print("Alice's Key: ", aliceKey)
 
     for index, digit in enumerate(aliceKey):
         if digit == '1':
@@ -328,7 +341,6 @@ def bb84Simulation():
     discardedBits = []
     for qubit, basis in enumerate(zip(aliceTable, bobTable)):
         if basis[0] == basis[1]:
-            # print("Qubit No:{}, Same choice on basis: {}, Bit added to the Key: {}" .format(qubit, basis[0],aliceKey[qubit]))
             measurementList.append(MeasurementFrame(qubitNo=qubit,
                                                     aliceBit=aliceKey[qubit],
                                                     aliceBase=basis[0],
@@ -336,7 +348,6 @@ def bb84Simulation():
                                                     result=True))
             keptBits.append(qubit)
         else:
-            # print("Qubit No:{}, Different Choice, Alice has {}, Bob has {}, No Bit added to the Key" .format(qubit, basis[0], basis[1]))
             measurementList.append(MeasurementFrame(qubitNo=qubit,
                                                     aliceBit=aliceKey[qubit],
                                                     aliceBase=basis[0],
@@ -348,8 +359,6 @@ def bb84Simulation():
     for bit in zip(aliceKey, bobKey):
         if bit[0] == bit[1]:
             acc += 1
-    print('Percentage of qubits to be discarded according to table comparison: ', len(keptBits) / n)
-    print('Measurement convergence by additional chance: ', acc / n)
 
     newAliceKey = [aliceKey[qubit] for qubit in keptBits]
     newBobKey = [bobKey[qubit] for qubit in keptBits]
@@ -358,8 +367,6 @@ def bb84Simulation():
     for bit in zip(newAliceKey, newBobKey):
         if bit[0] == bit[1]:
             acc += 1
-
-    print('Percentage of similarity between the keys: ', acc / len(newAliceKey))
 
     if acc // len(newAliceKey) == 1:
         print("Key exchange has been successfull")
@@ -378,10 +385,10 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Simulation")
 
-    #Command for full screen option
-    #root.attributes('-fullscreen', True)
+    # Command for full screen option
+    # root.attributes('-fullscreen', True)
 
-    root.resizable(False,False)
+    root.resizable(False, False)
 
     # Create first frame
     firstFrame = FirstFrame(root)
@@ -389,7 +396,7 @@ if __name__ == "__main__":
     # Create second frame
     simulationFrame = SecondFrame(root)
     simulationFrame.pack_propagate(False)
-    simulationFrame.pack_forget()  # Hide second frame initially
+    simulationFrame.pack_forget()
 
     infoFrame = InfoFrame(root)
     infoFrame.pack_propagate(False)
