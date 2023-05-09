@@ -19,18 +19,18 @@ class FirstFrame(tk.Frame):
         tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background='navy')
         self.pack()
 
-        self.startButton = tk.Button(self, text="Start Simulation", command=self.switch_to_second_frame)
+        self.startButton = tk.Button(self, text="Start Simulation", command=self.goToSimPage)
         self.startButton.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        self.informationButton = tk.Button(self, text="Learn About BB84 Protocol! ", command=self.show_info_frame)
+        self.informationButton = tk.Button(self, text="Learn About BB84 Protocol! ", command=self.goToInfoPage)
         self.informationButton.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
-    def switch_to_second_frame(self):
+    def goToSimPage(self):
         self.pack_forget()
         simulationFrame.pack()
         bb84Simulation()
 
-    def show_info_frame(self):
+    def goToInfoPage(self):
         self.pack_forget()
         infoFrame.pack()
 
@@ -41,48 +41,48 @@ class InfoFrame(tk.Frame):
         self.pack()
 
         # Top Frame for buttons
-        top_frame = tk.Frame(self, bg="grey")
-        top_frame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.N, fill=tk.BOTH)
+        topFrame = tk.Frame(self, bg="grey")
+        topFrame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.N, fill=tk.BOTH)
 
         # Create "Back" button
-        self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_first_frame)
-        self.back_button.pack(side=tk.LEFT)
+        self.backButton = tk.Button(topFrame, text="Back", command=self.goToFirstPage)
+        self.backButton.pack(side=tk.LEFT)
         # Create "Next" button
-        self.next_button = tk.Button(top_frame, text="Next", command=self.switch_to_info2)
-        self.next_button.pack(side=tk.RIGHT)
+        self.nextButton = tk.Button(topFrame, text="Next", command=self.goToInfo2Page)
+        self.nextButton.pack(side=tk.RIGHT)
 
         # Frame for Information
-        mid_frame = tk.Frame(self, bg="grey")
-        mid_frame.pack(anchor=tk.CENTER, fill=tk.BOTH, expand=True)
+        midFrame = tk.Frame(self, bg="grey")
+        midFrame.pack(anchor=tk.CENTER, fill=tk.BOTH, expand=True)
 
         # Add text label
         text = "Quantum Key Distribution (QKD) is a method for securely distributing cryptographic keys between two parties - Alice and Bob - by using the principles of quantum mechanics. The BB84 protocol is one of the most well-known QKD protocols, developed by Charles Bennett and Gilles Brassard in 1984. The BB84 protocol works by using two quantum bits (qubits) - one to transmit the key and the other to verify its integrity. Alice randomly encodes the bits she wants to send to Bob using one of four possible states, which are chosen from two different bases. Each state represents a specific bit value, either a 0 or a 1. Bob then receives the encoded qubits and measures them in one of the two bases, chosen randomly. Once Bob has measured the qubits, Alice and Bob publicly compare the bases they used. If they used the same basis, Bob's measurement result reveals the value of the corresponding bit, and they can use it to form their shared secret key. If they used different bases, they discard the bit value and repeat the process until enough bits are obtained.The security of the BB84 protocol comes from the fact that any attempt to eavesdrop on the transmission will inevitably introduce errors that can be detected by Alice and Bob. According to the principles of quantum mechanics, any attempt to observe or measure a qubit will change its state, which can be detected by the parties. Thus, if an eavesdropper tries to intercept the qubits, they will introduce errors that will be detected during the verification process, allowing Alice and Bob to discard the affected bits and prevent the eavesdropper from obtaining any information about the key. QKD, and specifically the BB84 protocol, provides a method for securely distributing cryptographic keys that is resistant to interception or tampering. While still in its early stages of development, QKD has the potential to revolutionize the way in which secure communications are established and maintained, and it is an exciting area of research in both physics and computer science."
-        text_message = tk.Message(mid_frame, text=text, width=600, justify="center", bg="grey")
-        text_message.pack(side=tk.TOP)
+        textMessage = tk.Message(midFrame, text=text, width=600, justify="center", bg="grey")
+        textMessage.pack(side=tk.TOP)
 
         # wrapper = textwrap.TextWrapper(width=100)  # set the maximum width for each line
         # wrapped_text = wrapper.fill(text)
         # text_label = tk.Label(mid_frame, text=wrapped_text, width=300,height=500, justify="center", anchor="w", background="grey")
         # text_label.pack(side=tk.TOP, padx=10, pady=10)
 
-    def show_info_frame(self):
+    def showInfoPage(self):
         # Hide any previously shown frames
-        self.hide_all_frames()
+        self.hideAllPages()
 
         # Add the info_frame to the main window
         self.pack()
 
-    def hide_all_frames(self):
+    def hideAllPages(self):
         # Hide all frames in the main window
         self.pack_forget()
 
-    def switch_to_first_frame(self):
+    def goToFirstPage(self):
         self.pack_forget()
         firstFrame.pack()
 
-    def switch_to_info2(self):
+    def goToInfo2Page(self):
         # Hide all frames in the main window
-        self.hide_all_frames()
+        self.hideAllPages()
         self.pack_forget()
         infoFrame2.pack()
 
@@ -93,14 +93,14 @@ class InfoFrame2(tk.Frame):
         self.pack()
 
         # Add other widgets to the frame as needed
-        top_frame = tk.Frame(self)
-        top_frame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.NW)
+        topFrame = tk.Frame(self)
+        topFrame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.NW)
         # Create "Back" button
-        self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_info1)
-        self.back_button.pack(side=tk.LEFT)
+        self.backButton = tk.Button(topFrame, text="Back", command=self.goToInfoPage)
+        self.backButton.pack(side=tk.LEFT)
         # Create "Next" button
-        self.next_button = tk.Button(top_frame, text="Return to Homepage", command=self.switch_to_first_frame)
-        self.next_button.pack(side=tk.RIGHT)
+        self.nextButton = tk.Button(topFrame, text="Return to Homepage", command=self.goToFirstPage)
+        self.nextButton.pack(side=tk.RIGHT)
         # Load and resize the image
         image = Image.open('imagee.jpeg')
         image = image.resize((600, 435), Image.LANCZOS)
@@ -109,28 +109,28 @@ class InfoFrame2(tk.Frame):
         photo = ImageTk.PhotoImage(image)
 
         # Create a label to display the image
-        image_label = tk.Label(self, image=photo)
-        image_label.image = photo  # Keep a reference to the photo to avoid garbage collection
+        imageLabel = tk.Label(self, image=photo)
+        imageLabel.image = photo  # Keep a reference to the photo to avoid garbage collection
 
         # Add the label to the frame
-        image_label.pack(side=tk.BOTTOM, padx=10, pady=10, anchor=tk.CENTER)
+        imageLabel.pack(side=tk.BOTTOM, padx=10, pady=10, anchor=tk.CENTER)
 
-    def show_info_frame2(self):
+    def showInfo2Page(self):
         # Hide any previously shown frames
-        self.hide_all_frames()
+        self.hideAllPages()
 
         # Add the info_frame to the main window
         self.pack()
 
-    def hide_all_frames(self):
+    def hideAllPages(self):
         # Hide all frames in the main window
         self.pack_forget()
 
-    def switch_to_first_frame(self):
+    def goToFirstPage(self):
         self.pack_forget()
         firstFrame.pack()
 
-    def switch_to_info1(self):
+    def goToInfoPage(self):
         # Hide all frames in the main window
         self.pack_forget()
         infoFrame.pack()
@@ -144,21 +144,21 @@ class SecondFrame(tk.Frame):
         self.pack()
 
         # Create top frame for the "Back" button
-        top_frame = tk.Frame(self, bg="green")
-        top_frame.pack(fill=tk.BOTH)
+        topFrame = tk.Frame(self, bg="green")
+        topFrame.pack(fill=tk.BOTH)
 
         # Create "Back" button
-        self.back_button = tk.Button(top_frame, text="Back", command=self.switch_to_first_frame)
-        self.back_button.grid(row=0, column=0, sticky="NW")
-        self.back_button.pack(anchor=tk.NW)
+        self.backButton = tk.Button(topFrame, text="Back", command=self.goToFirstPage)
+        self.backButton.grid(row=0, column=0, sticky="NW")
+        self.backButton.pack(anchor=tk.NW)
 
         # Create middle frame for simulation
-        mid_frame = tk.Frame(self, bg="yellow")
-        mid_frame.pack(fill=tk.BOTH, expand=True)
-        mid_frame.pack_propagate(False)
+        midFrame = tk.Frame(self, bg="yellow")
+        midFrame.pack(fill=tk.BOTH, expand=True)
+        midFrame.pack_propagate(False)
 
         # Create canvas for middle frame
-        self.canvas = tk.Canvas(mid_frame, bg="blue", scrollregion=(0, 0, 0, 4000))
+        self.canvas = tk.Canvas(midFrame, bg="blue", scrollregion=(0, 0, 0, 4000))
         self.canvas.pack(fill=tk.BOTH, padx=1, pady=1, expand=True)
         self.canvas.pack_propagate(False)
 
@@ -169,18 +169,28 @@ class SecondFrame(tk.Frame):
         self.canvas.configure(yscrollcommand=scrollbar.set)
 
         # Create bottom frame for "Next" button
-        bottom_frame = tk.Frame(self, bg="red")
-        bottom_frame.pack(fill=tk.BOTH)
+        bottomFrame = tk.Frame(self, bg="red")
+        bottomFrame.pack(fill=tk.BOTH)
 
         # Create "Next" button
-        self.next_button = tk.Button(bottom_frame, text="Next", command=self.show_next_frame)
-        self.next_button.pack(anchor=tk.S)
+        self.nextButton = tk.Button(bottomFrame, text="Next", command=self.show_next_frame)
+        self.nextButton.pack(anchor=tk.S)
 
         #Create Frame List for measurement frames
         self.frameList = []
 
-    def create_frame(self):
-        # Create a new frame inside the main frame
+    def createSimInfoFrame(self):
+        frame = tk.Frame(self.canvas)
+        frame.pack(ipadx=50, ipady=50)
+        frame.pack_propagate(False)
+
+        text = "Alice BB84 ŞÖYLEDİR BÖYLEDİR ŞİMD BURDAN BÖYLEDİR SONRA FİZİKSEL KANAL FALAN FİLAN FİSO BOB EVE BLABLA DEMEDEN DEVAM EDER GİDER EDER ÇOK DA MÜHİM DEĞİL BLABLA"
+        message = tk.Message(frame,text=text,width=600)
+        message.grid(row=0,column=0)
+
+        self.frameList.append(frame)
+
+    def createSimFrame(self):
         frame = tk.Frame(self.canvas)
         frame.pack(ipadx=50, ipady=50)
         frame.pack_propagate(False)
@@ -231,19 +241,21 @@ class SecondFrame(tk.Frame):
         self.frameList.append(frame)
 
     def show_next_frame(self):
-        # Increment the currentSimStage and set the previous button
+        # Increment the currentSimStage
         self.currentSimStage += 1
 
-        # Create a new frame and show it
-        self.create_frame()
+        if self.currentSimStage == 1:
+            self.createSimInfoFrame()
+        else:
+            self.createSimFrame()
 
         # Put Frame in window at canvas
-        self.canvas.create_window(380, 100 + ((self.currentSimStage - 1) * 100),
+        self.canvas.create_window(380, 100 + ((self.currentSimStage-1) * 100),
                                   anchor="center",
-                                  window=self.frameList[self.currentSimStage -1],
+                                  window=self.frameList[self.currentSimStage-1],
                                   tags="measurementFrame")
 
-    def switch_to_first_frame(self):
+    def goToFirstPage(self):
         # Clear the data about previous simulation
         self.canvas.delete('measurementFrame')
 
@@ -251,7 +263,6 @@ class SecondFrame(tk.Frame):
         self.currentSimStage = 0
 
         self.frameList.clear()
-
 
         # Go To First Frame
         self.pack_forget()
