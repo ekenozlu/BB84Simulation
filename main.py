@@ -3,9 +3,16 @@ import textwrap
 import numpy as np
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, execute, BasicAer
 from PIL import Image, ImageTk
+import customtkinter as ctk
 
 screenWidth = 800
 screenHeight = 800
+
+mainOrange = '#E88531'
+mainBlue = '#3375B1'
+mainGreen = '#43877E'
+secondaryBlue = '#50B1D4'
+secondaryGreen = '#50B1D4'
 
 n = 16
 quantumRegister = QuantumRegister(n, name='qr')
@@ -25,13 +32,24 @@ info = simInfoClass()
 
 class FirstFrame(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background='navy')
+        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background=mainOrange)
         self.pack()
 
-        self.startButton = tk.Button(self, text="Start Simulation", command=self.goToSimPage)
+        #self.startButton = tk.Button(self, highlightbackground=mainBackgroundColor, text="Start Simulation", command=self.goToSimPage)
+        #self.startButton.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        self.startButton = ctk.CTkButton(master=self, command=self.goToSimPage,
+                                         width=150,height=30,
+                                         text="Start Simulation",
+                                         fg_color=mainBlue, hover_color= secondaryBlue,
+                                         border_color="white",border_width=1)
         self.startButton.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        self.informationButton = tk.Button(self, text="Learn About BB84 Protocol! ", command=self.goToInfoPage)
+        self.informationButton = ctk.CTkButton(master=self,command=self.goToInfoPage,
+                                               width=200,height=30,
+                                               text="Learn About BB84 Protocol",
+                                               fg_color=mainBlue, hover_color= secondaryBlue,
+                                               border_color="white",border_width=1)
         self.informationButton.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
     def goToSimPage(self):
@@ -46,27 +64,27 @@ class FirstFrame(tk.Frame):
 
 class InfoFrame(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background='grey')
+        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background=mainOrange)
         self.pack()
 
         # Top Frame for buttons
-        topFrame = tk.Frame(self, bg="grey")
+        topFrame = tk.Frame(self, bg=mainOrange)
         topFrame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.N, fill=tk.BOTH)
 
         # Create "Back" button
-        self.backButton = tk.Button(topFrame, text="Back", command=self.goToFirstPage)
+        self.backButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Back", command=self.goToFirstPage)
         self.backButton.pack(side=tk.LEFT)
         # Create "Next" button
-        self.nextButton = tk.Button(topFrame, text="Next", command=self.goToInfo2Page)
+        self.nextButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Next", command=self.goToInfo2Page)
         self.nextButton.pack(side=tk.RIGHT)
 
         # Frame for Information
-        midFrame = tk.Frame(self, bg="grey")
+        midFrame = tk.Frame(self, bg=mainOrange)
         midFrame.pack(anchor=tk.CENTER, fill=tk.BOTH, expand=True)
 
         # Add text label
         text = "Quantum Key Distribution (QKD) is a method for securely distributing cryptographic keys between two parties - Alice and Bob - by using the principles of quantum mechanics. The BB84 protocol is one of the most well-known QKD protocols, developed by Charles Bennett and Gilles Brassard in 1984. The BB84 protocol works by using two quantum bits (qubits) - one to transmit the key and the other to verify its integrity. Alice randomly encodes the bits she wants to send to Bob using one of four possible states, which are chosen from two different bases. Each state represents a specific bit value, either a 0 or a 1. Bob then receives the encoded qubits and measures them in one of the two bases, chosen randomly. Once Bob has measured the qubits, Alice and Bob publicly compare the bases they used. If they used the same basis, Bob's measurement result reveals the value of the corresponding bit, and they can use it to form their shared secret key. If they used different bases, they discard the bit value and repeat the process until enough bits are obtained.The security of the BB84 protocol comes from the fact that any attempt to eavesdrop on the transmission will inevitably introduce errors that can be detected by Alice and Bob. According to the principles of quantum mechanics, any attempt to observe or measure a qubit will change its state, which can be detected by the parties. Thus, if an eavesdropper tries to intercept the qubits, they will introduce errors that will be detected during the verification process, allowing Alice and Bob to discard the affected bits and prevent the eavesdropper from obtaining any information about the key. QKD, and specifically the BB84 protocol, provides a method for securely distributing cryptographic keys that is resistant to interception or tampering. While still in its early stages of development, QKD has the potential to revolutionize the way in which secure communications are established and maintained, and it is an exciting area of research in both physics and computer science."
-        textMessage = tk.Message(midFrame, text=text, width=600, justify="center", bg="grey")
+        textMessage = tk.Message(midFrame, text=text, width=600, justify="center", bg=mainOrange)
         textMessage.pack(side=tk.TOP)
 
         # wrapper = textwrap.TextWrapper(width=100)  # set the maximum width for each line
@@ -98,17 +116,17 @@ class InfoFrame(tk.Frame):
 
 class InfoFrame2(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background='white')
+        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background=mainOrange)
         self.pack()
 
         # Add other widgets to the frame as needed
-        topFrame = tk.Frame(self)
+        topFrame = tk.Frame(self, bg=mainOrange)
         topFrame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.NW)
         # Create "Back" button
-        self.backButton = tk.Button(topFrame, text="Back", command=self.goToInfoPage)
+        self.backButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Back", command=self.goToInfoPage)
         self.backButton.pack(side=tk.LEFT)
         # Create "Next" button
-        self.nextButton = tk.Button(topFrame, text="Return to Homepage", command=self.goToFirstPage)
+        self.nextButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Return to Homepage", command=self.goToFirstPage)
         self.nextButton.pack(side=tk.RIGHT)
 
         # Load and resize the image
@@ -150,26 +168,26 @@ class SecondFrame(tk.Frame):
     currentSimStage = 0
 
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight)
+        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, highlightbackground=mainOrange, bg=mainOrange)
         self.pack()
 
         # Create top frame for the "Back" button
-        topFrame = tk.Frame(self, bg="green")
+        topFrame = tk.Frame(self, bg=mainOrange)
         topFrame.pack(fill=tk.BOTH)
 
         # Create "Back" button
-        self.backButton = tk.Button(topFrame, text="Back", command=self.goToFirstPage)
+        self.backButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Back", command=self.goToFirstPage)
         self.backButton.grid(row=0, column=0, sticky="NW")
         self.backButton.pack(anchor=tk.NW)
 
         # Create middle frame for simulation
-        midFrame = tk.Frame(self, bg="yellow")
+        midFrame = tk.Frame(self)
         midFrame.pack(fill=tk.BOTH, expand=True)
         midFrame.pack_propagate(False)
 
         # Create canvas for middle frame
-        self.canvas = tk.Canvas(midFrame, bg="blue", scrollregion=(0, 0, 0, 4000))
-        self.canvas.pack(fill=tk.BOTH, padx=1, pady=1, expand=True)
+        self.canvas = tk.Canvas(midFrame, bg=mainOrange, highlightbackground=mainOrange, scrollregion=(0, 0, 0, 4000))
+        self.canvas.pack(fill=tk.BOTH, expand=True)
         self.canvas.pack_propagate(False)
 
         # Create Scrollbar for middle frame
@@ -179,11 +197,11 @@ class SecondFrame(tk.Frame):
         self.canvas.configure(yscrollcommand=scrollbar.set)
 
         # Create bottom frame for "Next" button
-        bottomFrame = tk.Frame(self, bg="red")
+        bottomFrame = tk.Frame(self, bg=mainOrange)
         bottomFrame.pack(fill=tk.BOTH)
 
         # Create "Next" button
-        self.nextButton = tk.Button(bottomFrame, text="Next", command=self.showNextFrame)
+        self.nextButton = tk.Button(bottomFrame, highlightbackground=mainOrange, text="Next", command=self.showNextFrame)
         self.nextButton.pack(anchor=tk.S)
 
         # Create Frame List for measurement frames
@@ -207,7 +225,7 @@ class SecondFrame(tk.Frame):
         baseDescription.pack()
 
         baseFrame = tk.Frame(mainFrame)
-        baseFrame.pack(fill=tk.BOTH,expand=True,ipadx=5)
+        baseFrame.pack(fill=tk.BOTH,expand=True)
         #baseFrame.pack_propagate(False)
 
         i = 0
