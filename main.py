@@ -1,16 +1,16 @@
 import tkinter as tk
-import textwrap
 import numpy as np
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, execute, BasicAer
 from PIL import Image, ImageTk
 import customtkinter as ctk
 
-screenWidth = 800
-screenHeight = 800
+screenWidth = 0
+screenHeight = 0
 
 mainOrange = '#E88531'
 mainBlue = '#3375B1'
 mainGreen = '#43877E'
+secondaryOrange = '#FAA35A'
 secondaryBlue = '#50B1D4'
 secondaryGreen = '#50B1D4'
 
@@ -30,32 +30,31 @@ class simInfoClass:
 info = simInfoClass()
 
 
-class FirstFrame(tk.Frame):
+class FirstFrame(ctk.CTkFrame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background=mainOrange)
+        ctk.CTkFrame.__init__(self, master,
+                              width=int(screenWidth * 0.5), height=int(screenHeight * .75),
+                              fg_color=mainOrange)
         self.pack()
 
-        #self.startButton = tk.Button(self, highlightbackground=mainBackgroundColor, text="Start Simulation", command=self.goToSimPage)
-        #self.startButton.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
         self.startButton = ctk.CTkButton(master=self, command=self.goToSimPage,
-                                         width=150,height=30,
+                                         width=int(screenWidth * 0.18), height=int(screenHeight * 0.05),
                                          text="Start Simulation",
-                                         fg_color=mainBlue, hover_color= secondaryBlue,
-                                         border_color="white",border_width=1)
+                                         fg_color=mainBlue, hover_color=secondaryBlue,
+                                         border_color="white", border_width=1)
         self.startButton.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        self.informationButton = ctk.CTkButton(master=self,command=self.goToInfoPage,
-                                               width=200,height=30,
+        self.informationButton = ctk.CTkButton(master=self, command=self.goToInfoPage,
+                                               width=int(screenWidth * 0.25), height=int(screenHeight * 0.05),
                                                text="Learn About BB84 Protocol",
-                                               fg_color=mainBlue, hover_color= secondaryBlue,
-                                               border_color="white",border_width=1)
+                                               fg_color=mainBlue, hover_color=secondaryBlue,
+                                               border_color="white", border_width=1)
         self.informationButton.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
     def goToSimPage(self):
         self.pack_forget()
-        simulationFrame.pack()
         bb84Simulation()
+        simulationFrame.pack()
 
     def goToInfoPage(self):
         self.pack_forget()
@@ -64,7 +63,9 @@ class FirstFrame(tk.Frame):
 
 class InfoFrame(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background=mainOrange)
+        tk.Frame.__init__(self, master,
+                          width=int(screenWidth * 0.5), height=int(screenHeight * .75),
+                          background=mainOrange)
         self.pack()
 
         # Top Frame for buttons
@@ -84,13 +85,8 @@ class InfoFrame(tk.Frame):
 
         # Add text label
         text = "Quantum Key Distribution (QKD) is a method for securely distributing cryptographic keys between two parties - Alice and Bob - by using the principles of quantum mechanics. The BB84 protocol is one of the most well-known QKD protocols, developed by Charles Bennett and Gilles Brassard in 1984. The BB84 protocol works by using two quantum bits (qubits) - one to transmit the key and the other to verify its integrity. Alice randomly encodes the bits she wants to send to Bob using one of four possible states, which are chosen from two different bases. Each state represents a specific bit value, either a 0 or a 1. Bob then receives the encoded qubits and measures them in one of the two bases, chosen randomly. Once Bob has measured the qubits, Alice and Bob publicly compare the bases they used. If they used the same basis, Bob's measurement result reveals the value of the corresponding bit, and they can use it to form their shared secret key. If they used different bases, they discard the bit value and repeat the process until enough bits are obtained.The security of the BB84 protocol comes from the fact that any attempt to eavesdrop on the transmission will inevitably introduce errors that can be detected by Alice and Bob. According to the principles of quantum mechanics, any attempt to observe or measure a qubit will change its state, which can be detected by the parties. Thus, if an eavesdropper tries to intercept the qubits, they will introduce errors that will be detected during the verification process, allowing Alice and Bob to discard the affected bits and prevent the eavesdropper from obtaining any information about the key. QKD, and specifically the BB84 protocol, provides a method for securely distributing cryptographic keys that is resistant to interception or tampering. While still in its early stages of development, QKD has the potential to revolutionize the way in which secure communications are established and maintained, and it is an exciting area of research in both physics and computer science."
-        textMessage = tk.Message(midFrame, text=text, width=600, justify="center", bg=mainOrange)
+        textMessage = tk.Message(midFrame, text=text, width=int(screenWidth * 0.75), justify="center", bg=mainOrange)
         textMessage.pack(side=tk.TOP)
-
-        # wrapper = textwrap.TextWrapper(width=100)  # set the maximum width for each line
-        # wrapped_text = wrapper.fill(text)
-        # text_label = tk.Label(mid_frame, text=wrapped_text, width=300,height=500, justify="center", anchor="w", background="grey")
-        # text_label.pack(side=tk.TOP, padx=10, pady=10)
 
     def showInfoPage(self):
         # Hide any previously shown frames
@@ -116,7 +112,9 @@ class InfoFrame(tk.Frame):
 
 class InfoFrame2(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, background=mainOrange)
+        tk.Frame.__init__(self, master,
+                          width=int(screenWidth * 0.5), height=int(screenHeight * .75),
+                          background=mainOrange)
         self.pack()
 
         # Add other widgets to the frame as needed
@@ -126,7 +124,8 @@ class InfoFrame2(tk.Frame):
         self.backButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Back", command=self.goToInfoPage)
         self.backButton.pack(side=tk.LEFT)
         # Create "Next" button
-        self.nextButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Return to Homepage", command=self.goToFirstPage)
+        self.nextButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Return to Homepage",
+                                    command=self.goToFirstPage)
         self.nextButton.pack(side=tk.RIGHT)
 
         # Load and resize the image
@@ -164,56 +163,72 @@ class InfoFrame2(tk.Frame):
         infoFrame.pack()
 
 
-class SecondFrame(tk.Frame):
+class SecondFrame(ctk.CTkFrame):
     currentSimStage = 0
 
     def __init__(self, master):
-        tk.Frame.__init__(self, master, width=screenWidth, height=screenHeight, highlightbackground=mainOrange, bg=mainOrange)
+        ctk.CTkFrame.__init__(self, master,
+                              width=int(screenWidth * 0.5), height=int(screenHeight * 0.75),
+                              fg_color=mainOrange)
         self.pack()
+        self.pack_propagate(False)
 
         # Create top frame for the "Back" button
-        topFrame = tk.Frame(self, bg=mainOrange)
-        topFrame.pack(fill=tk.BOTH)
+        self.topFrame = ctk.CTkFrame(master=self,
+                                     width=int(screenWidth * 0.5),
+                                     fg_color=secondaryOrange, corner_radius=9)
+        self.topFrame.pack(fill=tk.BOTH, padx=4, pady=4)
 
         # Create "Back" button
-        self.backButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Back", command=self.goToFirstPage)
-        self.backButton.grid(row=0, column=0, sticky="NW")
-        self.backButton.pack(anchor=tk.NW)
+        self.backButton = ctk.CTkButton(master=self.topFrame, command=self.goToFirstPage,
+                                        width=int(screenWidth * 0.03), height=int(screenHeight * 0.03),
+                                        text="Back",
+                                        fg_color=mainBlue, hover_color=secondaryBlue,
+                                        border_color="white", border_width=1)
+        self.backButton.pack(side=tk.LEFT, padx=4, pady=4)
 
         # Create middle frame for simulation
-        midFrame = tk.Frame(self)
-        midFrame.pack(fill=tk.BOTH, expand=True)
-        midFrame.pack_propagate(False)
+        self.midFrame = ctk.CTkScrollableFrame(master=self,
+                                               width=int(screenWidth * 0.5),
+                                               fg_color=secondaryOrange, corner_radius=9,
+                                               scrollbar_button_color=mainOrange,
+                                               scrollbar_button_hover_color=mainOrange)
+        self.midFrame.pack(fill=tk.BOTH, expand=True,padx=4)
 
         # Create canvas for middle frame
-        self.canvas = tk.Canvas(midFrame, bg=mainOrange, highlightbackground=mainOrange, scrollregion=(0, 0, 0, 4000))
-        self.canvas.pack(fill=tk.BOTH, expand=True)
-        self.canvas.pack_propagate(False)
+        # self.canvas = tk.Canvas(midFrame,width=screenWidth*0.46, height= screenHeight*0.7,bg=mainOrange, highlightbackground=mainOrange,scrollregion=(0, 0, 0, 4000))
+        # self.canvas.pack(side=tk.LEFT,fill=tk.BOTH,expand=True,pady=4,padx=4)
+        # self.canvas.pack_propagate(False)
 
         # Create Scrollbar for middle frame
-        scrollbar = tk.Scrollbar(self.canvas, orient='vertical')
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        scrollbar.config(command=self.canvas.yview)
-        self.canvas.configure(yscrollcommand=scrollbar.set)
+        # scrollbar = tk.Scrollbar(midFrame, orient='vertical')
+        # scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        # scrollbar.config(command=self.canvas.yview)
+        # self.canvas.configure(yscrollcommand=scrollbar.set)
 
         # Create bottom frame for "Next" button
-        bottomFrame = tk.Frame(self, bg=mainOrange)
-        bottomFrame.pack(fill=tk.BOTH)
+        self.bottomFrame = ctk.CTkFrame(master=self,
+                                        width=int(screenWidth * 0.5),
+                                        fg_color=secondaryOrange, corner_radius=9)
+        self.bottomFrame.pack(fill=tk.BOTH, padx=4, pady=4)
 
-        # Create "Next" button
-        self.nextButton = tk.Button(bottomFrame, highlightbackground=mainOrange, text="Next", command=self.showNextFrame)
-        self.nextButton.pack(anchor=tk.S)
+        self.nextButton = ctk.CTkButton(master=self.bottomFrame, command=self.showNextFrame,
+                                        width=int(screenWidth * 0.05),
+                                        text="Next",
+                                        fg_color=mainBlue, hover_color=secondaryBlue,
+                                        border_color="white", border_width=1)
+        self.nextButton.pack(anchor=tk.CENTER, pady=4)
 
         # Create Frame List for measurement frames
         self.frameList = []
 
     def createSimInfoFrame(self):
-        mainFrame = tk.Frame(self.canvas, width=600, bg="yellow")
-        mainFrame.pack()
-        # frame.pack_propagate(False)
+        mainFrame = ctk.CTkFrame(master=self.midFrame, width=int(screenWidth * 0.45), fg_color="yellow",
+                                 corner_radius=9)
+        mainFrame.pack(anchor=tk.CENTER, pady=5)
 
-        topFrame = tk.Frame(mainFrame)
-        topFrame.pack(fill=tk.BOTH)
+        topFrame = ctk.CTkFrame(master=mainFrame)
+        topFrame.pack(fill=tk.BOTH, padx=3, pady=3)
         bitsText = "As information page about protocol, at first Alice generates a random set of bits. This time Alice's random bits are:"
         bitsDescription = tk.Message(topFrame, text=bitsText, justify="center", width=600)
         bitsDescription.pack()
@@ -224,59 +239,63 @@ class SecondFrame(tk.Frame):
         baseDescription = tk.Message(topFrame, text=baseText, justify="center", width=600)
         baseDescription.pack()
 
-        baseFrame = tk.Frame(mainFrame)
-        baseFrame.pack(fill=tk.BOTH,expand=True)
-        #baseFrame.pack_propagate(False)
+        baseFrame = ctk.CTkFrame(master=mainFrame)
+        baseFrame.pack(fill=tk.BOTH, padx=3, pady=3)
 
-        i = 0
         for base in info.aliceBases:
             imageName = './assets/diagonalbase.png' if base == "X" else './assets/rectilinearbase.png'
-            #img = Image.open(imageName)
-            #img.resize((40,40),Image.LANCZOS)
-
-            img = tk.PhotoImage(file=imageName)
-            imgLabel = tk.Label(baseFrame, image=img,padx=5)
-            imgLabel.image = img
-            imgLabel.pack(side=tk.LEFT)
-            i =+ 1
-
-
-        # baseLabel = tk.Label(frame, text=info.aliceBases, justify="center", anchor="center", font=("Arial", 25))
-        # baseLabel.pack()
+            imgSize = int((screenWidth * 0.45 - (15 * 4)) / 16)
+            img = ctk.CTkImage(light_image=Image.open(imageName), size=(imgSize, imgSize))
+            imgLabel = ctk.CTkLabel(baseFrame, image=img, text="")
+            imgLabel.pack(side=tk.LEFT, padx=2)
 
         self.frameList.append(mainFrame)
 
     def createSimFrame(self):
-        frame = tk.Frame(self.canvas)
-        frame.pack(ipadx=50, ipady=50)
+        frame = ctk.CTkFrame(master=self.midFrame,
+                             width=int(screenWidth * 0.45), height=int(screenHeight * 0.08),
+                             fg_color="yellow", corner_radius=9)
+        frame.pack(anchor=tk.CENTER, pady=5)
         frame.pack_propagate(False)
 
-        titleLabel1 = tk.Label(frame, text="Alice's Bit")
+        innerFrame = ctk.CTkFrame(master=frame)
+        innerFrame.pack(fill=tk.BOTH, expand=True, padx=3, pady=3)
+
+        innerFrame.rowconfigure(0, weight=1)
+        innerFrame.rowconfigure(1, weight=4)
+
+        innerFrame.columnconfigure(0, weight=1)
+        innerFrame.columnconfigure(1, weight=1)
+        innerFrame.columnconfigure(2, weight=5)
+        innerFrame.columnconfigure(3, weight=1)
+        innerFrame.columnconfigure(4, weight=1)
+
+        titleLabel1 = tk.Label(innerFrame, text="Alice's Bit")
         titleLabel1.grid(row=0, column=0)
 
-        titleLabel2 = tk.Label(frame, text="Alice's Base")
+        titleLabel2 = tk.Label(innerFrame, text="Alice's Base")
         titleLabel2.grid(row=0, column=1)
 
-        titleLabel3 = tk.Label(frame, text="Explanation")
+        titleLabel3 = tk.Label(innerFrame, text="Explanation")
         titleLabel3.grid(row=0, column=2)
 
-        titleLabel4 = tk.Label(frame, text="Bob's Base")
+        titleLabel4 = tk.Label(innerFrame, text="Bob's Base")
         titleLabel4.grid(row=0, column=3)
 
-        titleLabel5 = tk.Label(frame, text="Bob's Bit")
+        titleLabel5 = tk.Label(innerFrame, text="Bob's Bit")
         titleLabel5.grid(row=0, column=4)
 
         # ---------------------------------------------------
 
         # Alice's Bit
-        defLabel1 = tk.Label(frame, text=measurementList[self.currentSimStage - 1].aliceBit)
+        defLabel1 = tk.Label(innerFrame, text=measurementList[self.currentSimStage - 1].aliceBit)
         defLabel1.grid(row=1, column=0)
 
         # Alice's Bases
         aliceImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 1].aliceBase == "X" \
-                                                    else './assets/rectilinearbase.png'
+            else './assets/rectilinearbase.png'
         aliceImg = tk.PhotoImage(file=aliceImgPath)
-        defLabel2 = tk.Label(frame,image=aliceImg)
+        defLabel2 = tk.Label(innerFrame, image=aliceImg)
         defLabel2.image = aliceImg
         defLabel2.grid(row=1, column=1)
 
@@ -284,14 +303,14 @@ class SecondFrame(tk.Frame):
                    if measurementList[self.currentSimStage - 1].result
                    else
                    "Different base choice for Alice and Bob, no bit added to the key")
-        defLabel3 = tk.Message(frame, text=message, width=300, justify="center")
+        defLabel3 = tk.Message(innerFrame, text=message, width=300, justify="center")
         defLabel3.grid(row=1, column=2)
 
         bobImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 1].bobBase == "X" \
             else './assets/rectilinearbase.png'
         bobImg = tk.PhotoImage(file=bobImgPath)
 
-        defLabel4 = tk.Label(frame,image=bobImg)
+        defLabel4 = tk.Label(innerFrame, image=bobImg)
         defLabel4.image = bobImg
         defLabel4.grid(row=1, column=3)
 
@@ -299,7 +318,7 @@ class SecondFrame(tk.Frame):
                 if measurementList[self.currentSimStage - 1].result
                 else
                 "No Bit Received")
-        defLabel5 = tk.Message(frame, text=text, justify="center")
+        defLabel5 = tk.Message(innerFrame, text=text, justify="center")
         defLabel5.grid(row=1, column=4)
 
         # Put Frame into list
@@ -311,25 +330,22 @@ class SecondFrame(tk.Frame):
 
         if self.currentSimStage == 1:
             self.createSimInfoFrame()
-            self.canvas.create_window(380, 150, anchor="center", window=self.frameList[0])
+            # self.canvas.create_window(0, 0, anchor="center", window=self.frameList[0])
         else:
             self.createSimFrame()
-            self.canvas.create_window(380, 300 + ((self.currentSimStage - 2) * 100),
-                                      anchor="center",
-                                      window=self.frameList[self.currentSimStage - 1],
-                                      tags="measurementFrame")
-
-        # Put Frame in window at canvas
+            # self.canvas.create_window(380, 300 + ((self.currentSimStage - 2) * 100),anchor="center",window=self.frameList[self.currentSimStage - 1],tags="measurementFrame")
 
     def goToFirstPage(self):
         # Clear the data about previous simulation
-        self.canvas.delete('measurementFrame')
+        #self.canvas.delete('measurementFrame')
 
-        measurementList.clear()
-        self.currentSimStage = 0
+        for frame in self.frameList:
+            frame.pack_forget()
+            frame.destroy()
 
         self.frameList.clear()
-
+        measurementList.clear()
+        self.currentSimStage = 0
         # Go To First Frame
         self.pack_forget()
         firstFrame.pack()
@@ -465,10 +481,18 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Simulation")
 
+    screenWidth = root.winfo_screenwidth()
+    screenHeight = root.winfo_screenheight()
+
+    rootWidth = screenWidth * 0.5
+    rootHeight = screenHeight * 0.75
+    posX = (screenWidth / 2) - (rootWidth / 2)
+    posY = (screenHeight / 2) - (rootHeight / 2)
+    root.geometry('%dx%d+%d+%d' % (rootWidth, rootHeight, posX, posY))
+    root.resizable(False, False)
+
     # Command for full screen option
     # root.attributes('-fullscreen', True)
-
-    root.resizable(False, False)
 
     # Create first frame
     firstFrame = FirstFrame(root)
