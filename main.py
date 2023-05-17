@@ -33,7 +33,7 @@ info = simInfoClass()
 class FirstFrame(ctk.CTkFrame):
     def __init__(self, master):
         ctk.CTkFrame.__init__(self, master,
-                              width=int(screenWidth * 0.5), height=int(screenHeight * .75),
+                              width=int(screenWidth * 0.5), height=int(screenHeight * 0.75),
                               fg_color=mainOrange)
         self.pack()
 
@@ -58,56 +58,91 @@ class FirstFrame(ctk.CTkFrame):
 
     def goToInfoPage(self):
         self.pack_forget()
-        infoFrame.pack()
+        infoFrame.grid()
 
 
-class InfoFrame(tk.Frame):
+class InfoFrame(ctk.CTkFrame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master,
-                          width=int(screenWidth * 0.5), height=int(screenHeight * .75),
-                          background=mainOrange)
+        ctk.CTkFrame.__init__(self, master,
+                          width=int(screenWidth * 0.5), height=int(screenHeight * 0.75),
+                          fg_color=mainOrange)
         self.pack()
 
-        # Top Frame for buttons
-        topFrame = tk.Frame(self, bg=mainOrange)
-        topFrame.pack(side=tk.TOP, padx=10, pady=10, anchor=tk.N, fill=tk.BOTH)
+        self.gridFrame =ctk.CTkFrame(self,fg_color=mainOrange)
+        self.gridFrame.pack(fill=tk.BOTH,expand=True)
 
-        # Create "Back" button
-        self.backButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Back", command=self.goToFirstPage)
-        self.backButton.pack(side=tk.LEFT)
-        # Create "Next" button
-        self.nextButton = tk.Button(topFrame, highlightbackground=mainOrange, text="Next", command=self.goToInfo2Page)
-        self.nextButton.pack(side=tk.RIGHT)
+        self.gridFrame.grid_rowconfigure(1, weight=1)
+        self.gridFrame.grid_columnconfigure(1, weight=1)
 
-        # Frame for Information
-        midFrame = tk.Frame(self, bg=mainOrange)
-        midFrame.pack(anchor=tk.CENTER, fill=tk.BOTH, expand=True)
+        # Create frame for Back Button
+        self.topLeftFrame = ctk.CTkFrame(self.gridFrame, corner_radius=9, fg_color=secondaryOrange)
+        self.topLeftFrame.grid(row=0, column=0, sticky="nsew", padx=4, pady=4)
+        self.backButton = ctk.CTkButton(self.topLeftFrame, command=self.goToFirstPage,
+                                        text="Back",
+                                        fg_color=mainBlue, hover_color=secondaryBlue,
+                                        border_color="white", border_width=1, border_spacing=5)
+        self.backButton.pack(anchor=ctk.NW, padx=4, pady=4)
 
-        # Add text label
+        # Create a Navigation Frame
+        self.navigationFrame = ctk.CTkFrame(self.gridFrame, corner_radius=9, fg_color=secondaryOrange)
+        self.navigationFrame.grid(row=1, column=0, sticky="nsew", padx=4, pady=4)
+        self.navigationFrame.grid_rowconfigure(6, weight=1)
+
+        self.firstPageButton = ctk.CTkButton(self.navigationFrame, command=self.firstInfoFrameEvent,
+                                             text="1. Introduction",
+                                             fg_color=mainBlue, hover_color=secondaryBlue,
+                                             border_color="white", border_width=1, border_spacing=5)
+        self.firstPageButton.grid(row=0, column=0, sticky="ew", padx=4, pady=4)
+
+        self.secondPageButton = ctk.CTkButton(self.navigationFrame, command=self.secondInfoFrameEvent,
+                                              text="2. Example Table",
+                                              fg_color=mainBlue, hover_color=secondaryBlue,
+                                              border_color="white", border_width=1, border_spacing=5)
+        self.secondPageButton.grid(row=1, column=0, sticky="ew", padx=4, pady=4)
+
+        # -----------------------------------------
+
+        # Create a general frame for informations
+        self.generalInfoFrame = ctk.CTkFrame(self.gridFrame, corner_radius=9, fg_color=secondaryOrange)
+        self.generalInfoFrame.grid(row=0, column=1, rowspan=2, sticky="nsew", padx=4, pady=4)
         text = "Quantum Key Distribution (QKD) is a method for securely distributing cryptographic keys between two parties - Alice and Bob - by using the principles of quantum mechanics. The BB84 protocol is one of the most well-known QKD protocols, developed by Charles Bennett and Gilles Brassard in 1984. The BB84 protocol works by using two quantum bits (qubits) - one to transmit the key and the other to verify its integrity. Alice randomly encodes the bits she wants to send to Bob using one of four possible states, which are chosen from two different bases. Each state represents a specific bit value, either a 0 or a 1. Bob then receives the encoded qubits and measures them in one of the two bases, chosen randomly. Once Bob has measured the qubits, Alice and Bob publicly compare the bases they used. If they used the same basis, Bob's measurement result reveals the value of the corresponding bit, and they can use it to form their shared secret key. If they used different bases, they discard the bit value and repeat the process until enough bits are obtained.The security of the BB84 protocol comes from the fact that any attempt to eavesdrop on the transmission will inevitably introduce errors that can be detected by Alice and Bob. According to the principles of quantum mechanics, any attempt to observe or measure a qubit will change its state, which can be detected by the parties. Thus, if an eavesdropper tries to intercept the qubits, they will introduce errors that will be detected during the verification process, allowing Alice and Bob to discard the affected bits and prevent the eavesdropper from obtaining any information about the key. QKD, and specifically the BB84 protocol, provides a method for securely distributing cryptographic keys that is resistant to interception or tampering. While still in its early stages of development, QKD has the potential to revolutionize the way in which secure communications are established and maintained, and it is an exciting area of research in both physics and computer science."
-        textMessage = tk.Message(midFrame, text=text, width=int(screenWidth * 0.75), justify="center", bg=mainOrange)
-        textMessage.pack(side=tk.TOP)
+        #textMessage = tk.Message(self, text=text, width=int(screenWidth * 0.35), justify="center", bg=mainOrange)
+        #textMessage.pack(side=tk.TOP)
 
-    def showInfoPage(self):
-        # Hide any previously shown frames
-        self.hideAllPages()
+        # First Info Frame
+        self.firstFrame = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
 
-        # Add the info_frame to the main window
-        self.pack()
+        # Second Info Frame
+        self.second_frame = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color="yellow")
 
-    def hideAllPages(self):
-        # Hide all frames in the main window
-        self.pack_forget()
+        # -----------------------------------------
+        # Show Default Frame
+        self.showInfoFrameByName("first")
+
+    def showInfoFrameByName(self, name):
+        # Show selected frame
+        if name == "first":
+            self.firstFrame.pack(fill=ctk.BOTH, expand=True, padx=4, pady=4)
+        else:
+            self.firstFrame.pack_forget()
+        if name == "second":
+            self.second_frame.pack(fill=ctk.BOTH, expand=True, padx=4, pady=4)
+        else:
+            self.second_frame.pack_forget()
+
+    def firstInfoFrameEvent(self):
+        self.showInfoFrameByName("first")
+
+    def secondInfoFrameEvent(self):
+        self.showInfoFrameByName("second")
 
     def goToFirstPage(self):
-        self.pack_forget()
+        self.grid_forget()
         firstFrame.pack()
 
     def goToInfo2Page(self):
-        # Hide all frames in the main window
-        self.hideAllPages()
-        self.pack_forget()
-        infoFrame2.pack()
+        self.grid_forget()
+        #infoFrame2.pack()
 
 
 class InfoFrame2(tk.Frame):
@@ -496,6 +531,9 @@ if __name__ == "__main__":
 
     # Create first frame
     firstFrame = FirstFrame(root)
+    firstFrame.pack_propagate(False)
+    #firstFrame.pack_forget()
+
 
     # Create second frame
     simulationFrame = SecondFrame(root)
@@ -506,9 +544,9 @@ if __name__ == "__main__":
     infoFrame.pack_propagate(False)
     infoFrame.pack_forget()
 
-    infoFrame2 = InfoFrame2(root)
-    infoFrame2.pack_propagate(False)
-    infoFrame2.pack_forget()
+    #infoFrame2 = InfoFrame2(root)
+    #infoFrame2.pack_propagate(False)
+    #infoFrame2.pack_forget()
 
     # Start the tkinter event loop
     root.mainloop()
