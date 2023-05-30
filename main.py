@@ -173,8 +173,8 @@ class InfoFrame(ctk.CTkFrame):
 
         # Table Info Frame
         self.InfoFrameTable = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
-        image = Image.open('./assets/imagee.jpeg')
-        image = image.resize((int(screenWidth * 0.65), int(screenHeight * 0.55)), Image.LANCZOS)
+        image = Image.open('./assets/bb84tablo.jpg')
+        image = image.resize((int(screenWidth * 0.65), int(screenHeight* 0.87)), Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)
         imageLabel = tk.Label(self.InfoFrameTable, image=photo)
         imageLabel.image = photo
