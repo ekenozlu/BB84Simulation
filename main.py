@@ -14,6 +14,14 @@ secondaryOrange = '#FAA35A'
 secondaryBlue = '#50B1D4'
 secondaryGreen = '#50B1D4'
 
+textFont = ('Arial',14)
+textFontBold = ('Arial',14,'bold')
+titleFont = ('Arial',18)
+titleFontBold = ('Arial',18,'bold')
+bigFont = ('Arial',26)
+bigFontBold = ('Arial',26,'bold')
+
+
 measurementList = []
 
 
@@ -21,6 +29,7 @@ class simInfoClass:
     def __int__(self):
         self.aliceKeys = None
         self.aliceBases = None
+        self.bobBases = None
         self.resultKey = None
 
 
@@ -45,9 +54,8 @@ class FirstFrame(ctk.CTkFrame):
         self.topButtonFrame.pack(fill=tk.BOTH, padx=5, pady=3,expand=True)
 
         self.sliderValueLabel = ctk.CTkLabel(master=self.topButtonFrame,
-                                             text_color="white",
-                                             text=("Bit Length for Simulation: " + str(
-                                                 round(self.bitSize))))
+                                             text_color="white",font=titleFontBold,
+                                             text=("Bit Length for Simulation: " + str(round(self.bitSize))))
         self.sliderValueLabel.pack(anchor=ctk.CENTER, pady=10)
 
         self.simulationBitSlider = ctk.CTkSlider(master=self.topButtonFrame, command=self.simSliderEvent,
@@ -61,6 +69,7 @@ class FirstFrame(ctk.CTkFrame):
         self.startButton = ctk.CTkButton(master=self.topButtonFrame, command=self.goToSimPage,
                                          width=int(screenWidth * 0.18), height=int(screenHeight * 0.05),
                                          text="Start Simulation",
+                                         text_color="white",font=titleFontBold,
                                          fg_color=mainBlue, hover_color=secondaryBlue,
                                          border_color="white", border_width=1)
         self.startButton.pack(anchor=ctk.CENTER,pady=10)
@@ -71,13 +80,13 @@ class FirstFrame(ctk.CTkFrame):
         self.informationButton = ctk.CTkButton(master=self.bottomButtonFrame, command=self.goToInfoPage,
                                                width=int(screenWidth * 0.18), height=int(screenHeight * 0.05),
                                                text="Learn About BB84 Protocol",
+                                               text_color="white",font=titleFontBold,
                                                fg_color=mainBlue, hover_color=secondaryBlue,
                                                border_color="white", border_width=1)
         self.informationButton.pack(anchor=ctk.CENTER,pady=20)
 
     def simSliderEvent(self,value):
         self.bitSize = round(value)
-        print("içerde bitsize:" + str(self.bitSize))
         self.sliderValueLabel.configure(text=("Bit Length for Simulation: " + str(round(self.simulationBitSlider.get()))))
 
     def goToSimPage(self):
@@ -108,9 +117,10 @@ class InfoFrame(ctk.CTkFrame):
         self.topLeftFrame.grid(row=0, column=0, sticky="nsew", padx=4, pady=4)
         self.backButton = ctk.CTkButton(self.topLeftFrame, command=self.goToFirstPage,
                                         text="Back",
+                                        text_color="white", font=textFontBold,
                                         fg_color=mainBlue, hover_color=secondaryBlue,
                                         border_color="white", border_width=1, border_spacing=5)
-        self.backButton.pack(anchor=ctk.NW, padx=4, pady=4)
+        self.backButton.pack(anchor=ctk.NW,fill=ctk.BOTH, padx=4, pady=4)
 
         # Create a Navigation Frame
         self.navigationFrame = ctk.CTkFrame(self.gridFrame, corner_radius=9, fg_color=secondaryOrange)
@@ -119,24 +129,28 @@ class InfoFrame(ctk.CTkFrame):
 
         self.firstPageButton = ctk.CTkButton(self.navigationFrame, command=self.firstInfoAction,
                                              text="1. Introduction",
+                                             text_color="white", font=textFontBold, anchor="w",
                                              fg_color=mainBlue, hover_color=secondaryBlue,
                                              border_color="white", border_width=1, border_spacing=5)
         self.firstPageButton.grid(row=0, column=0, sticky="ew", padx=4, pady=4)
 
         self.secondPageButton = ctk.CTkButton(self.navigationFrame, command=self.secondInfoAction,
                                               text="2. About QKD",
+                                              text_color="white", font=textFontBold, anchor="w",
                                               fg_color=mainBlue, hover_color=secondaryBlue,
                                               border_color="white", border_width=1, border_spacing=5)
         self.secondPageButton.grid(row=1, column=0, sticky="ew", padx=4, pady=4)
 
         self.thirdPageButton = ctk.CTkButton(self.navigationFrame, command=self.thirdInfoAction,
                                              text="3. How BB84 Works?",
+                                             text_color="white", font=textFontBold, anchor="w",
                                              fg_color=mainBlue, hover_color=secondaryBlue,
                                              border_color="white", border_width=1, border_spacing=5)
         self.thirdPageButton.grid(row=2, column=0, sticky="ew", padx=4, pady=4)
 
         self.forthPageButton = ctk.CTkButton(self.navigationFrame, command=self.forthInfoAction,
                                              text="4. Example Table",
+                                             text_color="white", font=textFontBold, anchor="w",
                                              fg_color=mainBlue, hover_color=secondaryBlue,
                                              border_color="white", border_width=1, border_spacing=5)
         self.forthPageButton.grid(row=3, column=0, sticky="ew", padx=4, pady=4)
@@ -151,6 +165,7 @@ class InfoFrame(ctk.CTkFrame):
         self.InfoFrameIntroduction = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
         text = "\nQuantum Key Distribution (QKD) and the BB84 protocol represent groundbreaking advancements in the field of secure communication. In an era where data breaches and cyberattacks are increasingly prevalent, QKD offers a promising solution by harnessing the principles of quantum mechanics to establish unbreakable cryptographic keys. At the heart of this technology lies the BB84 protocol, a pioneering method developed by Charles Bennett and Gilles Brassard in 1984.\n\nQKD leverages the bizarre and counterintuitive properties of quantum mechanics to provide an unparalleled level of security. Unlike classical encryption algorithms that rely on computational complexity, QKD achieves its security through the fundamental laws of physics. By leveraging the principles of quantum superposition and uncertainty, QKD ensures that any attempt to intercept or tamper with the communication will inevitably be detected.\n\nThe BB84 protocol serves as a fundamental building block of QKD. It provides a robust framework for generating, transmitting, and verifying cryptographic keys between two parties, commonly referred to as Alice and Bob. Through a series of carefully orchestrated steps, BB84 enables the creation of a shared secret key that can be used to encrypt and decrypt messages securely.\n\nQKD and the BB84 protocol have the potential to revolutionize secure communication in various domains, including finance, government, and defense. The unbreakable security offered by QKD opens up new avenues for confidential and reliable information exchange, paving the way for a future where data can be transmitted and stored with absolute confidence.\n\nIn this educative simulation, we will delve deeper into the intricacies of QKD and explore the inner workings of the BB84 protocol. By understanding the principles and mechanisms underlying this revolutionary technology, we aim to empower you with the knowledge to appreciate and apply the immense potential of quantum secure communication."
         textMessage = tk.Message(self.InfoFrameIntroduction, text=text,
+                                 foreground="white",font=textFont,
                                  width=int(screenWidth * 0.65),
                                  justify="left", bg=secondaryOrange)
         textMessage.pack(side=tk.TOP, padx=1, pady=4)
@@ -159,6 +174,7 @@ class InfoFrame(ctk.CTkFrame):
         self.InfoFrameQKD = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
         text = "\nQuantum Key Distribution (QKD) is an innovative cryptographic technology that relies on the principles of quantum physics to establish secure communication channels. At its core, QKD takes advantage of the unique properties exhibited by quantum systems, such as superposition and entanglement. Quantum physics, also known as quantum mechanics, is the branch of physics that describes the behavior of particles at the atomic and subatomic levels. It challenges classical physics by introducing principles that are fundamentally different from everyday experiences. Superposition allows particles to exist in multiple states simultaneously, while measurement collapses the superposition into a single state. Quantum entanglement enables correlations between particles even at a distance.\n\nThe security of QKD is derived from the fact that any attempt to observe or measure the qubits during transmission will disturb their quantum states, revealing the presence of an eavesdropper. This fundamental principle of quantum physics ensures the confidentiality and integrity of the exchanged cryptographic keys.\n\nQKD represents a paradigm shift in secure communication, offering unconditional security based on the laws of quantum physics. QKD provides a robust framework for secure communication in a world increasingly challenged by sophisticated cyber threats. Ongoing research continues to advance QKD and its practical implementations, bringing us closer to a future where secure communication is guaranteed through the principles of quantum physics.\n\nQKD protocols are fundamental frameworks that govern the secure exchange of cryptographic keys between two parties in Quantum Key Distribution. These protocols provide step-by-step procedures to ensure the confidentiality and integrity of the key exchange process. Notable QKD protocols include the BB84 protocol, which uses quantum states and random basis measurements, and the E91 protocol, which relies on entangled particles to establish secure keys. Other protocols like the B92, SARG04, and DPS protocols offer alternative approaches to address specific challenges or optimize certain aspects of QKD. Each protocol has its unique characteristics, strengths, and limitations, contributing to the diverse landscape of secure quantum communication."
         textMessage = tk.Message(self.InfoFrameQKD, text=text,
+                                 foreground="white",font=textFont,
                                  width=int(screenWidth * 0.65),
                                  justify="left", bg=secondaryOrange)
         textMessage.pack(side=tk.TOP, padx=1, pady=4)
@@ -167,6 +183,7 @@ class InfoFrame(ctk.CTkFrame):
         self.InfoFrameBB84 = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
         text = "\nThe BB84 protocol, devised by Bennett and Brassard in 1984, is a highly influential Quantum Key Distribution (QKD) protocol that facilitates secure key exchange between two parties, commonly known as Alice and Bob. It encompasses several crucial steps, including key generation, quantum encoding, transmission, basis measurement, announcement, comparison, error estimation, and key distillation.\n\n In BB84, Alice generates a random sequence of binary bits that she encodes into quantum states, using two mutually unbiased bases: rectilinear (Z) and diagonal (X). She then transmits the encoded qubits to Bob through a quantum channel. Upon receiving the qubits, Bob randomly selects a measurement basis for each qubit and performs measurements accordingly. He publicly announces the bases he used. Alice and Bob then compare a subset of their measurement results, discarding inconsistent ones due to mismatched bases. By estimating the error rate, they can identify potential eavesdropping attempts. Finally, Alice and Bob perform error correction and privacy amplification to distill a shared cryptographic key.\n\n \n\n"
         textMessage = tk.Message(self.InfoFrameBB84, text=text,
+                                 foreground="white",font=textFont,
                                  width=int(screenWidth * 0.65),
                                  justify="left", bg=secondaryOrange)
         textMessage.pack(side=tk.TOP, padx=1, pady=4)
@@ -239,6 +256,7 @@ class SimulationFrame(ctk.CTkFrame):
         self.backButton = ctk.CTkButton(master=self.topFrame, command=self.goToFirstPage,
                                         width=int(screenWidth * 0.06), height=int(screenHeight * 0.03),
                                         text="Back",
+                                        text_color="white", font=textFontBold,
                                         fg_color=mainBlue, hover_color=secondaryBlue,
                                         border_color="white", border_width=1)
         self.backButton.pack(side=tk.LEFT, padx=4, pady=4)
@@ -258,6 +276,7 @@ class SimulationFrame(ctk.CTkFrame):
         self.nextButton = ctk.CTkButton(master=self.bottomFrame, command=self.showNextFrame,
                                         width=int(screenWidth * 0.06), height=int(screenHeight * 0.03),
                                         state="normal", text="Next",
+                                        text_color="white", font=textFontBold,
                                         fg_color=mainBlue, hover_color=secondaryBlue,
                                         border_color="white", border_width=1)
         self.nextButton.pack(anchor=tk.CENTER, pady=4)
@@ -270,71 +289,109 @@ class SimulationFrame(ctk.CTkFrame):
         mainFrame.pack(anchor=ctk.CENTER, fill=ctk.BOTH, pady=5, padx=100)
 
         topFrame = ctk.CTkFrame(master=mainFrame, fg_color=mainOrange)
-        topFrame.pack(fill=tk.BOTH, padx=5, pady=3)
+        topFrame.pack(fill=tk.BOTH, padx=4, pady=4)
         bitsText = "As information page about protocol, at first Alice generates a random set of bits. This time Alice's random bits are:"
-        bitsDescription = tk.Message(topFrame, text=bitsText, justify="center", width=int(screenWidth * 0.6),
+        bitsDescription = tk.Message(topFrame, text=bitsText,
+                                     foreground="white",font=textFont,
+                                     justify="center", width=int(screenWidth * 0.6),
                                      fg="white", background=mainOrange)
         bitsDescription.pack(pady=8)
-        bitsLabel = tk.Label(topFrame, text=info.aliceKeys, justify="center", anchor="center", font=("Arial", 25),
-                             fg="white", background=mainOrange)
+        bitsLabel = ctk.CTkLabel(master=topFrame, text=info.aliceKeys,
+                                 text_color="white", font=bigFontBold,
+                                 justify="center", anchor="center", fg_color=mainOrange)
         bitsLabel.pack()
 
-        baseText = "After that, Alice sends photons to Bob on different bases in quantum channel, Alice's bases are:"
-        baseDescription = tk.Message(topFrame, text=baseText, justify="center", width=600, fg="white",
-                                     background=mainOrange)
+        baseText = "After that, Alice sends photons to Bob on different bases in quantum channel."
+        baseDescription = ctk.CTkLabel(master=topFrame, text=baseText,
+                                       text_color="white", font=textFont,
+                                       justify="center", anchor="center", fg_color=mainOrange)
         baseDescription.pack(pady=8)
 
-        tempFrame = ctk.CTkFrame(master=mainFrame, fg_color=mainOrange)
-        tempFrame.pack(fill=tk.BOTH, padx=5, pady=3)
+        tempAliceFrame = ctk.CTkFrame(master=mainFrame, fg_color=mainOrange)
+        tempAliceFrame.pack(fill=tk.BOTH, padx=4, pady=4)
 
-        baseFrame = ctk.CTkFrame(master=tempFrame, fg_color=mainOrange)
-        baseFrame.pack(anchor=ctk.CENTER,pady=4)
+        aliceTextLabel = ctk.CTkLabel(master=tempAliceFrame, text="Alice's random chosen bases are:",
+                                 text_color="white", font=textFont,
+                                 justify="center", anchor="center", fg_color=mainOrange)
+        aliceTextLabel.pack()
+
+        aliceBaseFrame = ctk.CTkFrame(master=tempAliceFrame, fg_color=mainOrange)
+        aliceBaseFrame.pack(anchor=ctk.CENTER)
 
         for base in info.aliceBases:
             imageName = './assets/diagonalbase.png' if base == "X" else './assets/rectilinearbase.png'
             imgSize = int(screenWidth * 0.025)
             img = ctk.CTkImage(light_image=Image.open(imageName), dark_image=Image.open(imageName),
                                size=(imgSize, imgSize))
-            imgLabel = ctk.CTkLabel(baseFrame, image=img, text="", fg_color=mainOrange)
+            imgLabel = ctk.CTkLabel(aliceBaseFrame, image=img, text="", fg_color=mainOrange)
+            imgLabel.pack(side=tk.LEFT, padx=2, pady=5)
+
+        tempBobFrame = ctk.CTkFrame(master=mainFrame, fg_color=mainOrange)
+        tempBobFrame.pack(fill=tk.BOTH, padx=4, pady=4)
+
+        bobTextLabel = ctk.CTkLabel(master=tempBobFrame, text="Bob's random chosen bases are:",
+                                      text_color="white", font=textFont,
+                                      justify="center", anchor="center", fg_color=mainOrange)
+        bobTextLabel.pack()
+
+        bobBaseFrame = ctk.CTkFrame(master=tempBobFrame, fg_color=mainOrange)
+        bobBaseFrame.pack(anchor=ctk.CENTER)
+
+        for base in info.bobBases:
+            imageName = './assets/diagonalbase.png' if base == "X" else './assets/rectilinearbase.png'
+            imgSize = int(screenWidth * 0.025)
+            img = ctk.CTkImage(light_image=Image.open(imageName), dark_image=Image.open(imageName),
+                               size=(imgSize, imgSize))
+            imgLabel = ctk.CTkLabel(bobBaseFrame, image=img, text="", fg_color=mainOrange)
             imgLabel.pack(side=tk.LEFT, padx=2, pady=5)
 
         self.frameList.append(mainFrame)
 
     def createSimFrame(self):
         frame = ctk.CTkFrame(master=self.midFrame, fg_color="white", corner_radius=9)
-        frame.pack(anchor=ctk.CENTER, fill=ctk.BOTH, pady=5, padx=100)
+        frame.pack(anchor=ctk.CENTER, fill=ctk.BOTH, pady=8, padx=100)
 
         self.innerFrame = ctk.CTkFrame(master=frame, fg_color=mainOrange, corner_radius=9)
-        self.innerFrame.pack(fill=ctk.BOTH, expand=True, padx=5, pady=3)
+        self.innerFrame.pack(fill=ctk.BOTH, expand=True, padx=4, pady=4)
 
         self.innerFrame.columnconfigure(2, weight=1)
 
-        titleLabel1 = ctk.CTkLabel(self.innerFrame, text="Alice's Bit", corner_radius=9, fg_color=secondaryOrange,
-                                   text_color="white", width=int(screenWidth * 0.07))
+        titleLabel1 = ctk.CTkLabel(self.innerFrame, text="Alice's Bit",
+                                   text_color="white", font=textFontBold,
+                                   corner_radius=9, fg_color=secondaryOrange,
+                                   width=int(screenWidth * 0.07))
         titleLabel1.grid(row=0, column=0, padx=3, pady=3, sticky="nsew")
 
-        titleLabel2 = ctk.CTkLabel(self.innerFrame, text="Alice's Base", corner_radius=9, fg_color=secondaryOrange,
-                                   text_color="white", width=int(screenWidth * 0.07))
+        titleLabel2 = ctk.CTkLabel(self.innerFrame, text="Alice's Base",
+                                   text_color="white", font=textFontBold,
+                                   corner_radius=9, fg_color=secondaryOrange,
+                                   width=int(screenWidth * 0.07))
         titleLabel2.grid(row=0, column=1, padx=3, pady=3, sticky="nsew")
 
-        titleLabel3 = ctk.CTkLabel(self.innerFrame, text="Explanation", corner_radius=9, fg_color=secondaryOrange,
-                                   text_color="white")
+        titleLabel3 = ctk.CTkLabel(self.innerFrame, text="Explanation",
+                                   text_color="white", font=textFontBold,
+                                   corner_radius=9, fg_color=secondaryOrange)
         titleLabel3.grid(row=0, column=2, padx=3, pady=3, sticky="ew")
 
-        titleLabel4 = ctk.CTkLabel(self.innerFrame, text="Bob's Base", corner_radius=9, fg_color=secondaryOrange,
-                                   text_color="white", width=int(screenWidth * 0.07))
+        titleLabel4 = ctk.CTkLabel(self.innerFrame, text="Bob's Base",
+                                   text_color="white", font=textFontBold,
+                                   corner_radius=9, fg_color=secondaryOrange,
+                                   width=int(screenWidth * 0.07))
         titleLabel4.grid(row=0, column=3, padx=3, pady=3, sticky="nsew")
 
-        titleLabel5 = ctk.CTkLabel(self.innerFrame, text="Bob's Bit", corner_radius=9, fg_color=secondaryOrange,
-                                   text_color="white", width=int(screenWidth * 0.07))
+        titleLabel5 = ctk.CTkLabel(self.innerFrame, text="Bob's Bit",
+                                   text_color="white", font=textFontBold,
+                                   corner_radius=9, fg_color=secondaryOrange,
+                                   width=int(screenWidth * 0.07))
         titleLabel5.grid(row=0, column=4, padx=3, pady=3, sticky="nsew")
 
         # ---------------------------------------------------
 
         # Alice's Bit
         defLabel1 = ctk.CTkLabel(self.innerFrame, text=measurementList[self.currentSimStage - 2].aliceBit,
-                                 corner_radius=9, fg_color=secondaryOrange, text_color="white")
-        defLabel1.grid(row=1, column=0, padx=3, pady=3, sticky="nsew")
+                                 text_color="white",font=bigFontBold,
+                                 corner_radius=9, fg_color=secondaryOrange)
+        defLabel1.grid(row=1, column=0, padx=3, pady=3, sticky="nsew",ipady=10)
 
         # Alice's Bases
         aliceImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 2].aliceBase == "X" \
@@ -345,15 +402,14 @@ class SimulationFrame(ctk.CTkFrame):
         defLabel2.image = aliceImg
         defLabel2.grid(row=1, column=1, padx=3, pady=3, sticky="nsew")
 
-        def3Frame = ctk.CTkFrame(self.innerFrame, fg_color=secondaryOrange, corner_radius=9)
-        def3Frame.grid(row=1, column=2, padx=3, pady=3, sticky="ew")
-
-        message = ("Same Base Choice for Alice and Bob.\n Bit added to the key"
-                   if measurementList[self.currentSimStage - 2].result
-                   else
-                   "Different base choice for Alice and Bob.\n No bit added to the key")
-        defLabel3 = tk.Message(def3Frame, text=message, justify="center", bg=secondaryOrange, aspect=300)
-        defLabel3.pack()
+        explanationText = ("Same Base Choice for Alice and Bob.\n Bit added to the key"
+                           if measurementList[self.currentSimStage - 2].result
+                           else
+                           "Different base choice for Alice and Bob.\n No bit added to the key")
+        defLabel3 = ctk.CTkLabel(master=self.innerFrame, text=explanationText,
+                                 text_color="white",font=textFont,
+                                 corner_radius=9, fg_color=secondaryOrange, justify="center")
+        defLabel3.grid(row=1, column=2, padx=3, pady=3, sticky="nsew")
 
         bobImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 2].bobBase == "X" \
             else './assets/rectilinearbase.png'
@@ -364,14 +420,18 @@ class SimulationFrame(ctk.CTkFrame):
         defLabel4.image = bobImg
         defLabel4.grid(row=1, column=3, padx=3, pady=3, sticky="nsew")
 
-        def5Frame = ctk.CTkFrame(self.innerFrame, fg_color=secondaryOrange, corner_radius=9)
-        def5Frame.grid(row=1, column=4, padx=3, pady=3, sticky="nsew")
+        #def5Frame = ctk.CTkFrame(self.innerFrame, fg_color=secondaryOrange, corner_radius=9)
+        #def5Frame.grid(row=1, column=4, padx=3, pady=3, sticky="nsew")
+
         text = (measurementList[self.currentSimStage - 2].aliceBit
                 if measurementList[self.currentSimStage - 2].result
                 else
-                "No Bit Received")
-        defLabel5 = tk.Message(def5Frame, text=text, justify="center", bg=secondaryOrange, aspect=160)
-        defLabel5.pack(fill=tk.BOTH, expand=True, padx=4, pady=4)
+                "No Bit \n Received")
+        defLabel5 = ctk.CTkLabel(self.innerFrame,text=text,
+                                 text_color="white",
+                                 font=bigFontBold if measurementList[self.currentSimStage - 2].result else textFont,
+                                 corner_radius=9, fg_color=secondaryOrange, justify="center")
+        defLabel5.grid(row=1, column=4, padx=3, pady=3, sticky="nsew")
 
         # ---------------------------------------------------
 
@@ -389,7 +449,8 @@ class SimulationFrame(ctk.CTkFrame):
                 keyListToString = ''.join(map(str, self.currentKey))
                 keyText = "Current key is:" "\n" + keyListToString
 
-        keyDescriptionLabel = ctk.CTkLabel(master=bottomFrame, text=keyText, text_color="white")
+        keyDescriptionLabel = ctk.CTkLabel(master=bottomFrame, text=keyText,
+                                           text_color="white",font=textFont)
         keyDescriptionLabel.pack(anchor=ctk.CENTER)
 
         self.frameList.append(frame)
@@ -401,17 +462,21 @@ class SimulationFrame(ctk.CTkFrame):
         topFrame = ctk.CTkFrame(master=mainFrame, fg_color=mainOrange)
         topFrame.pack(fill=tk.BOTH, padx=5, pady=3)
         resultText = "After measuring and comparing all qubits send by Alice to the Bob, Alice and Bob share their results on classical channel which can be hearable by anyone even Eve. As measurements show, generated key is:"
-        resultDescription = tk.Message(topFrame, text=resultText, justify="center", width=int(screenWidth * 0.44),
-                                       fg="white", background=mainOrange)
+        resultDescription = tk.Message(topFrame, text=resultText,
+                                       fg="white",font=textFont,
+                                       justify="center", width=int(screenWidth * 0.44), background=mainOrange)
         resultDescription.pack(pady=3, padx=3)
-        resultLabel = tk.Label(topFrame, text=info.resultKey, justify="center", anchor="center", font=("Arial", 25),
-                               fg="white", background=mainOrange)
-        resultLabel.pack()
 
-        baseText = "With this key, Alice and Bob can encrypt and decrypt files, messages or anything possible to transfer. Since quantum channel did not corrupted by any eavesdropper, It's secured."
-        baseDescription = tk.Message(topFrame, text=baseText, justify="center", width=int(screenWidth * 0.44),
-                                     fg="white", background=mainOrange)
-        baseDescription.pack()
+        resultKey = ctk.CTkLabel(master=topFrame,text=info.resultKey,
+                                   text_color="white", font=bigFontBold,
+                                   justify="center", anchor="center", fg_color=mainOrange)
+        resultKey.pack()
+
+        resultText2 = "With this key, Alice and Bob can encrypt and decrypt files, messages or anything possible to transfer. Since quantum channel did not corrupted by any eavesdropper, It's secured."
+        resultDescription2 = tk.Message(topFrame, text=resultText2,
+                                        fg="white", font=textFont,
+                                        justify="center", width=int(screenWidth * 0.44), background=mainOrange)
+        resultDescription2.pack()
 
         self.frameList.append(mainFrame)
 
@@ -573,6 +638,7 @@ def BB84Simulation(bitSize):
 
         info.aliceKeys = aliceKey
         info.aliceBases = aliceTable
+        info.bobBases = bobTable
         info.resultKey = newAliceKey
     else:
         print("Key exchange has been tampered! Check for eavesdropper or try again")
