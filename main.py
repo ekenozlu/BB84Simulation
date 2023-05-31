@@ -190,12 +190,12 @@ class InfoFrame(ctk.CTkFrame):
 
         # Table Info Frame
         self.InfoFrameTable = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
-        image = Image.open('./assets/bb84tablo.jpg')
-        image = image.resize((int(screenWidth * 0.65), int(screenHeight* 0.87)), Image.LANCZOS)
+        image = Image.open('assets/bb84table.jpg')
+        image = image.resize((int(screenWidth * 0.54), int(screenWidth * 0.54)), Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)
         imageLabel = tk.Label(self.InfoFrameTable, image=photo)
         imageLabel.image = photo
-        imageLabel.pack(side=tk.TOP, padx=1, pady=1, anchor=tk.N)
+        imageLabel.pack(side=tk.TOP, padx=2, pady=2, anchor=tk.N)
 
         # -----------------------------------------
         # Show Default Frame
@@ -290,7 +290,7 @@ class SimulationFrame(ctk.CTkFrame):
 
         topFrame = ctk.CTkFrame(master=mainFrame, fg_color=mainOrange)
         topFrame.pack(fill=tk.BOTH, padx=4, pady=4)
-        bitsText = "As information page about protocol, at first Alice generates a random set of bits. This time Alice's random bits are:"
+        bitsText = "As information page about protocol stated, at first Alice generates a random set of bits. This time Alice's random bits are:"
         bitsDescription = tk.Message(topFrame, text=bitsText,
                                      foreground="white",font=textFont,
                                      justify="center", width=int(screenWidth * 0.6),
