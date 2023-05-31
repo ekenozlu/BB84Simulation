@@ -127,33 +127,40 @@ class InfoFrame(ctk.CTkFrame):
         self.navigationFrame.grid(row=1, column=0, sticky="nsew", padx=4, pady=4)
         self.navigationFrame.grid_rowconfigure(6, weight=1)
 
-        self.firstPageButton = ctk.CTkButton(self.navigationFrame, command=self.firstInfoAction,
-                                             text="1. Introduction",
-                                             text_color="white", font=textFontBold, anchor="w",
-                                             fg_color=mainBlue, hover_color=secondaryBlue,
-                                             border_color="white", border_width=1, border_spacing=5)
-        self.firstPageButton.grid(row=0, column=0, sticky="ew", padx=4, pady=4)
+        self.pageButton1 = ctk.CTkButton(self.navigationFrame, command=self.infoAction1,
+                                         text="1. Introduction",
+                                         text_color="white", font=textFontBold, anchor="w",
+                                         fg_color=mainBlue, hover_color=secondaryBlue,
+                                         border_color="white", border_width=1, border_spacing=5)
+        self.pageButton1.grid(row=0, column=0, sticky="ew", padx=4, pady=4)
 
-        self.secondPageButton = ctk.CTkButton(self.navigationFrame, command=self.secondInfoAction,
-                                              text="2. About QKD",
-                                              text_color="white", font=textFontBold, anchor="w",
-                                              fg_color=mainBlue, hover_color=secondaryBlue,
-                                              border_color="white", border_width=1, border_spacing=5)
-        self.secondPageButton.grid(row=1, column=0, sticky="ew", padx=4, pady=4)
+        self.pageButton2 = ctk.CTkButton(self.navigationFrame, command=self.infoAction2,
+                                         text="2. About QKD",
+                                         text_color="white", font=textFontBold, anchor="w",
+                                         fg_color=mainBlue, hover_color=secondaryBlue,
+                                         border_color="white", border_width=1, border_spacing=5)
+        self.pageButton2.grid(row=1, column=0, sticky="ew", padx=4, pady=4)
 
-        self.thirdPageButton = ctk.CTkButton(self.navigationFrame, command=self.thirdInfoAction,
-                                             text="3. How BB84 Works?",
-                                             text_color="white", font=textFontBold, anchor="w",
-                                             fg_color=mainBlue, hover_color=secondaryBlue,
-                                             border_color="white", border_width=1, border_spacing=5)
-        self.thirdPageButton.grid(row=2, column=0, sticky="ew", padx=4, pady=4)
+        self.pageButton3 = ctk.CTkButton(self.navigationFrame, command=self.infoAction3,
+                                         text="3. How BB84 Works?",
+                                         text_color="white", font=textFontBold, anchor="w",
+                                         fg_color=mainBlue, hover_color=secondaryBlue,
+                                         border_color="white", border_width=1, border_spacing=5)
+        self.pageButton3.grid(row=2, column=0, sticky="ew", padx=4, pady=4)
 
-        self.forthPageButton = ctk.CTkButton(self.navigationFrame, command=self.forthInfoAction,
-                                             text="4. Example Table",
-                                             text_color="white", font=textFontBold, anchor="w",
-                                             fg_color=mainBlue, hover_color=secondaryBlue,
-                                             border_color="white", border_width=1, border_spacing=5)
-        self.forthPageButton.grid(row=3, column=0, sticky="ew", padx=4, pady=4)
+        self.pageButton4 = ctk.CTkButton(self.navigationFrame, command=self.infoAction4,
+                                         text="4. Example Table",
+                                         text_color="white", font=textFontBold, anchor="w",
+                                         fg_color=mainBlue, hover_color=secondaryBlue,
+                                         border_color="white", border_width=1, border_spacing=5)
+        self.pageButton4.grid(row=3, column=0, sticky="ew", padx=4, pady=4)
+
+        self.pageButton5 = ctk.CTkButton(self.navigationFrame, command=self.infoAction5,
+                                         text="5. About Simulation",
+                                         text_color="white", font=textFontBold, anchor="w",
+                                         fg_color=mainBlue, hover_color=secondaryBlue,
+                                         border_color="white", border_width=1, border_spacing=5)
+        self.pageButton5.grid(row=4, column=0, sticky="ew", padx=4, pady=4)
 
         # -----------------------------------------
 
@@ -168,7 +175,7 @@ class InfoFrame(ctk.CTkFrame):
                                  foreground="white",font=textFont,
                                  width=int(screenWidth * 0.65),
                                  justify="left", bg=secondaryOrange)
-        textMessage.pack(side=tk.TOP, padx=1, pady=4)
+        textMessage.pack(side=ctk.LEFT,anchor=ctk.N, padx=4, pady=4)
 
         # QKD Info Frame
         self.InfoFrameQKD = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
@@ -177,7 +184,7 @@ class InfoFrame(ctk.CTkFrame):
                                  foreground="white",font=textFont,
                                  width=int(screenWidth * 0.65),
                                  justify="left", bg=secondaryOrange)
-        textMessage.pack(side=tk.TOP, padx=1, pady=4)
+        textMessage.pack(side=ctk.LEFT,anchor=ctk.N, padx=4, pady=4)
 
         # BB84 Info Frame
         self.InfoFrameBB84 = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
@@ -186,7 +193,7 @@ class InfoFrame(ctk.CTkFrame):
                                  foreground="white",font=textFont,
                                  width=int(screenWidth * 0.65),
                                  justify="left", bg=secondaryOrange)
-        textMessage.pack(side=tk.TOP, padx=1, pady=4)
+        textMessage.pack(side=ctk.LEFT,anchor=ctk.N, padx=4, pady=4)
 
         # Table Info Frame
         self.InfoFrameTable = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
@@ -197,21 +204,34 @@ class InfoFrame(ctk.CTkFrame):
         imageLabel.image = photo
         imageLabel.pack(side=tk.TOP, padx=2, pady=2, anchor=tk.N)
 
+        # Simulation Info Frame
+        self.InfoFrameSim = ctk.CTkFrame(self.generalInfoFrame, corner_radius=9, fg_color=secondaryOrange)
+        text = "\nIn this simulation, we tried to g"
+        textMessage = tk.Message(self.InfoFrameSim, text=text,
+                                 foreground="white", font=textFont,
+                                 width=int(screenWidth * 0.65),
+                                 justify="left", bg=secondaryOrange)
+        textMessage.pack(side=ctk.LEFT,anchor=ctk.N, padx=4, pady=4)
+
+
         # -----------------------------------------
         # Show Default Frame
         self.showInfoFrameByName("1")
 
-    def firstInfoAction(self):
+    def infoAction1(self):
         self.showInfoFrameByName("1")
 
-    def secondInfoAction(self):
+    def infoAction2(self):
         self.showInfoFrameByName("2")
 
-    def thirdInfoAction(self):
+    def infoAction3(self):
         self.showInfoFrameByName("3")
 
-    def forthInfoAction(self):
+    def infoAction4(self):
         self.showInfoFrameByName("4")
+
+    def infoAction5(self):
+        self.showInfoFrameByName("5")
 
     def showInfoFrameByName(self, name):
         # Show selected frame
@@ -231,6 +251,10 @@ class InfoFrame(ctk.CTkFrame):
             self.InfoFrameTable.pack(fill=ctk.BOTH, expand=True, padx=4, pady=4)
         else:
             self.InfoFrameTable.pack_forget()
+        if name == "5":
+            self.InfoFrameSim.pack(fill=ctk.BOTH, expand=True, padx=4, pady=4)
+        else:
+            self.InfoFrameSim.pack_forget()
 
     def goToFirstPage(self):
         self.grid_forget()
