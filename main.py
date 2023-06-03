@@ -25,7 +25,7 @@ bigFontBold = ('Arial',26,'bold')
 measurementList = []
 
 
-class simInfoClass:
+class SimInfoClass:
     def __int__(self):
         self.aliceKeys = None
         self.aliceBases = None
@@ -33,7 +33,7 @@ class simInfoClass:
         self.resultKey = None
 
 
-info = simInfoClass()
+info = SimInfoClass()
 
 
 class FirstFrame(ctk.CTkFrame):
@@ -640,20 +640,20 @@ def BB84Simulation(bitSize):
                                                     frameKey=tempKeyArray))
             discardedBits.append(qubit)
 
-    acc = 0
+    accuracy = 0
     for bit in zip(aliceKey, bobKey):
         if bit[0] == bit[1]:
-            acc += 1
+            accuracy += 1
 
     newAliceKey = [aliceKey[qubit] for qubit in keptBits]
     newBobKey = [bobKey[qubit] for qubit in keptBits]
 
-    acc = 0
+    accuracy = 0
     for bit in zip(newAliceKey, newBobKey):
         if bit[0] == bit[1]:
-            acc += 1
+            accuracy += 1
 
-    if acc // len(newAliceKey) == 1:
+    if accuracy // len(newAliceKey) == 1:
         for frame in measurementList:
             frame.printResult()
 
