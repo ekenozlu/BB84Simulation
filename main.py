@@ -49,6 +49,13 @@ class FirstFrame(ctk.CTkFrame):
                               fg_color=mainOrange)
         self.pack()
 
+        image = Image.open("assets/logo-02.jpg")
+        image = image.resize((int(screenWidth * 0.8), int(screenHeight * 0.3)), Image.LANCZOS)
+        photo = ImageTk.PhotoImage(image)
+        image_label = tk.Label(self, image=photo)
+        image_label.image = photo
+        image_label.pack(side=tk.TOP, padx=1, pady=1, anchor=tk.N)
+
         self.buttonFrame = ctk.CTkFrame(master=self, fg_color="white", corner_radius=9,
                                         width=int(screenWidth * 0.75), height=int(screenHeight * 0.27))
         self.buttonFrame.place(anchor=ctk.CENTER, relx=0.5, rely=0.5)
