@@ -771,7 +771,7 @@ if __name__ == "__main__":
     root.resizable(False, False)
 
     #Scaling the window for Windows 8/10 DPI issue
-    root.tk.call('tk', 'scaling', 2.0)
+    root.tk.call('tk', 'scaling', 1.0)
 
     # First Frame
     firstFrame = FirstFrame(root)
