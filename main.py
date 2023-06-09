@@ -10,7 +10,6 @@ import numpy as np
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, execute, BasicAer
 from PIL import Image, ImageTk
 import customtkinter as ctk
-import ctypes
 
 screenWidth = 0
 screenHeight = 0
