@@ -1,6 +1,8 @@
 '''
-This Simulation is prepared by Computer Engineering team
-
+This simulation was designed and developed by Eken Özlü, Melisa Çevik and Elin Su Şentürk
+for the 2022-2023 academic year Capstone Project of Quantum Key Distribution.
+The purpose of the simulations is demonstrating the properties of BB84 Protocol
+for those who want to gain knowledge on the topic.
 '''
 
 import tkinter as tk
@@ -45,23 +47,28 @@ class FirstFrame(ctk.CTkFrame):
 
     def __init__(self, master):
         ctk.CTkFrame.__init__(self, master,
-                              width=int(screenWidth * 0.8), height=int(screenHeight * 0.9),
+                              width=int(screenWidth * 0.75), height=int(screenHeight * 0.85),
                               fg_color=mainOrange)
         self.pack()
+        self.grid_rowconfigure(2, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_propagate(False)
 
-        image = Image.open("assets/logo-02.jpg")
-        image = image.resize((int(screenWidth * 0.8), int(screenHeight * 0.3)), Image.LANCZOS)
+        self.mainTopFrame = ctk.CTkFrame(master=self, corner_radius=9, fg_color=mainOrange)
+        self.mainTopFrame.grid(row=0, column=0, sticky="nsew", padx=4, pady=4)
+
+        image = Image.open("assets/simulation_logo.jpg")
+        image = image.resize((int(screenHeight * 0.6), int(screenHeight * 0.3)), Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)
-        image_label = tk.Label(self, image=photo)
+        image_label = tk.Label(self.mainTopFrame, image=photo,background=mainOrange)
         image_label.image = photo
         image_label.pack(side=tk.TOP, padx=1, pady=1, anchor=tk.N)
 
-        self.buttonFrame = ctk.CTkFrame(master=self, fg_color="white", corner_radius=9,
-                                        width=int(screenWidth * 0.75), height=int(screenHeight * 0.27))
-        self.buttonFrame.place(anchor=ctk.CENTER, relx=0.5, rely=0.5)
-        self.buttonFrame.pack_propagate(False)
+        self.mainMiddleFrame = ctk.CTkFrame(master=self, fg_color="white", corner_radius=9,
+                                            width=int(screenWidth * 0.75), height=int(screenHeight * 0.27))
+        self.mainMiddleFrame.grid(row=1, column=0, sticky="nsew", padx=4, pady=4)
 
-        self.topButtonFrame = ctk.CTkFrame(master=self.buttonFrame, fg_color=secondaryOrange, corner_radius=9)
+        self.topButtonFrame = ctk.CTkFrame(master=self.mainMiddleFrame, fg_color=secondaryOrange, corner_radius=9)
         self.topButtonFrame.pack(fill=tk.BOTH, padx=5, pady=3, expand=True)
 
         self.sliderValueLabel = ctk.CTkLabel(master=self.topButtonFrame,
@@ -85,7 +92,7 @@ class FirstFrame(ctk.CTkFrame):
                                          border_color="white", border_width=1)
         self.startButton.pack(anchor=ctk.CENTER, pady=10)
 
-        self.bottomButtonFrame = ctk.CTkFrame(master=self.buttonFrame, fg_color=secondaryOrange, corner_radius=9)
+        self.bottomButtonFrame = ctk.CTkFrame(master=self.mainMiddleFrame, fg_color=secondaryOrange, corner_radius=9)
         self.bottomButtonFrame.pack(fill=tk.BOTH, padx=5, pady=3)
 
         self.informationButton = ctk.CTkButton(master=self.bottomButtonFrame, command=self.goToInfoPage,
@@ -95,6 +102,18 @@ class FirstFrame(ctk.CTkFrame):
                                                fg_color=mainBlue, hover_color=secondaryBlue,
                                                border_color="white", border_width=1)
         self.informationButton.pack(anchor=ctk.CENTER, pady=20)
+
+        self.mainBottomFrame = ctk.CTkFrame(master=self, fg_color=mainOrange, corner_radius=9,
+                                            width=int(screenWidth * 0.75), height=int(screenHeight * 0.27))
+        self.mainBottomFrame.grid(row=2, column=0, sticky="nsew", padx=4, pady=4)
+
+        creditText = "This simulation was designed and developed by Eken Özlü, Melisa Çevik and Elin Su Şentürk for the 2022-2023 academic year Capstone Project of Quantum Key Distribution." \
+                     "\nThe purpose of the simulations is demonstrating the properties of BB84 Protocol for those who want to gain knowledge on the topic."
+        self.bottomMessage = tk.Message(self.mainBottomFrame, text=creditText,
+                                 foreground="white", font=textFont,
+                                 width=int(screenWidth * 0.6),
+                                 justify="center", bg=mainOrange)
+        self.bottomMessage.pack(side=ctk.BOTTOM, anchor=ctk.S, pady=4)
 
     def simSliderEvent(self, value):
         self.bitSize = round(value)
@@ -114,7 +133,7 @@ class FirstFrame(ctk.CTkFrame):
 class InfoFrame(ctk.CTkFrame):
     def __init__(self, master):
         ctk.CTkFrame.__init__(self, master,
-                              width=int(screenWidth * 0.8), height=int(screenHeight * 0.9),
+                              width=int(screenWidth * 0.75), height=int(screenHeight * 0.85),
                               fg_color=mainOrange)
         self.pack()
 
@@ -278,7 +297,7 @@ class SimulationFrame(ctk.CTkFrame):
 
     def __init__(self, master):
         ctk.CTkFrame.__init__(self, master,
-                              width=int(screenWidth * 0.8), height=int(screenHeight * 0.9),
+                              width=int(screenWidth * 0.75), height=int(screenHeight * 0.85),
                               fg_color=mainOrange)
         self.pack()
         self.pack_propagate(False)
@@ -676,8 +695,8 @@ if __name__ == "__main__":
     screenWidth = root.winfo_screenwidth()
     screenHeight = root.winfo_screenheight()
 
-    rootWidth = screenWidth * 0.8
-    rootHeight = screenHeight * 0.9
+    rootWidth = screenWidth * 0.75
+    rootHeight = screenHeight * 0.85
     posX = (screenWidth / 2) - (rootWidth / 2)
     posY = (screenHeight / 2) - (rootHeight / 2)
     root.geometry('%dx%d+%d+%d' % (rootWidth, rootHeight, posX, posY))
