@@ -219,20 +219,22 @@ class InfoFrame(ctk.CTkFrame):
         text1 = "\nQuantum Key Distribution (QKD) and the BB84 protocol represent groundbreaking advancements in the field of secure communication. In an era where data breaches and cyberattacks are increasingly prevalent, QKD offers a promising solution by harnessing the principles of quantum mechanics to establish unbreakable cryptographic keys. At the heart of this technology lies the BB84 protocol, a pioneering method developed by Gilles Brassard and Charles Bennett in 1984."
         text2 = "QKD leverages the bizarre and counterintuitive properties of quantum mechanics to provide an unparalleled level of security. Unlike classical encryption algorithms that rely on computational complexity, QKD achieves its security through the fundamental laws of physics. By leveraging the principles of quantum superposition and uncertainty, QKD ensures that any attempt to intercept or tamper with the communication will inevitably be detected."
         text3 = "The BB84 protocol serves as a fundamental building block of QKD. It provides a robust framework for generating, transmitting, and verifying cryptographic keys between two parties, commonly referred to as Alice and Bob. Through a series of carefully orchestrated steps, BB84 enables the creation of a shared secret key that can be used to encrypt and decrypt messages securely."
+
         textMessage1 = tk.Message(self.InfoFrameIntroduction, text=text1,
                                  foreground="white", font=textFont,
                                  width=int(screenWidth * 0.6),
                                  justify="left", bg=secondaryOrange)
         textMessage1.pack(fill=ctk.BOTH, padx=4, pady=4)
 
-        image = Image.open('assets/infopage_photo1.jpg')
-        image = image.resize((int(screenWidth * 0.3), int(screenWidth * 0.21)), Image.LANCZOS)
-        photo = ImageTk.PhotoImage(image)
+        imagePath = Image.open('assets/infopage_photo1.jpg')
+        image = ctk.CTkImage(light_image=imagePath,dark_image=imagePath,size=((int(screenWidth * 0.3), int(screenWidth * 0.21))))
+
         imageText = "Gilles Brassard and Charles H. Bennett in order \n src: https://perimeterinstitute.ca/news/quantum-computing-pioneers-earn-breakthrough-prize"
-        imageLabel = tk.Label(self.InfoFrameIntroduction,
-                              image=photo, background=secondaryOrange,
-                              text=imageText, compound="top")
-        imageLabel.image = photo
+        imageLabel = ctk.CTkLabel(master=self.InfoFrameIntroduction,
+                                  image=image,
+                                  bg_color=secondaryOrange,
+                                  text=imageText, compound="top",text_color="white")
+        imageLabel.image = image
         imageLabel.pack(side=tk.TOP, padx=2, pady=2, anchor=tk.N)
 
         textMessage2 = tk.Message(self.InfoFrameIntroduction, text=text2,
@@ -264,13 +266,16 @@ class InfoFrame(ctk.CTkFrame):
                                  justify="left", bg=secondaryOrange)
         textMessage2.pack(fill=ctk.BOTH, padx=4, pady=4)
 
-        image = Image.open('assets/infopage_photo2.jpg')
-        image = image.resize((int(screenWidth * 0.3), int(screenWidth * 0.15)), Image.LANCZOS)
-        photo = ImageTk.PhotoImage(image)
-        imageLabel = tk.Label(self.InfoFrameQKD,
-                              image=photo, background=secondaryOrange,
-                              text="src: https://governmenttechnologyinsider.com/quantum-key-distribution-podcast-on-securing-future-network-communications/", compound="top")
-        imageLabel.image = photo
+        imagePath = Image.open('assets/infopage_photo2.jpg')
+        image = ctk.CTkImage(light_image=imagePath, dark_image=imagePath,
+                             size=((int(screenWidth * 0.3), int(screenWidth * 0.15))))
+
+        imageText = "src: https://governmenttechnologyinsider.com/quantum-key-distribution-podcast-on-securing-future-network-communications/"
+        imageLabel = ctk.CTkLabel(master=self.InfoFrameQKD,
+                                  image=image,
+                                  bg_color=secondaryOrange,
+                                  text=imageText, compound="top", text_color="white")
+        imageLabel.image = image
         imageLabel.pack(side=tk.TOP, padx=2, pady=2, anchor=tk.N)
 
         textMessage3 = tk.Message(self.InfoFrameQKD, text=text3,
