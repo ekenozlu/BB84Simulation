@@ -21,10 +21,10 @@ secondaryOrange = '#FAA35A'
 secondaryBlue = '#50B1D4'
 secondaryGreen = '#50B1D4'
 
-textFont = ('Arial', 14)
-textFontBold = ('Arial', 14, 'bold')
-titleFont = ('Arial', 18)
-titleFontBold = ('Arial', 18, 'bold')
+textFont = ('Arial', 16)
+textFontBold = ('Arial', 16, 'bold')
+titleFont = ('Arial', 20)
+titleFontBold = ('Arial', 20, 'bold')
 bigFont = ('Arial', 26)
 bigFontBold = ('Arial', 26, 'bold')
 
@@ -207,26 +207,44 @@ class InfoFrame(ctk.CTkFrame):
         self.InfoFrameSim = ctk.CTkScrollableFrame(self.generalInfoFrame, fg_color=secondaryOrange, corner_radius=9,
                                                    scrollbar_button_color=mainOrange,
                                                    scrollbar_button_hover_color=mainOrange)
-        text1 = "\nWe tried to create an educative simulation where we explore the fascinating world of Quantum Key Distribution (QKD) and delve into the inner workings of the BB84 protocol. Our aim is to provide you with a comprehensive understanding of this revolutionary technology, empowering you to appreciate and harness the immense potential of quantum secure communication." \
-                "\n\nWhen you launch the application, you will be greeted by the main screen, which features two buttons and a slider. The first button takes you to the simulation page, where you can explore the step-by-step process of the protocol. The second button leads you to the information page, which provides detailed explanations about the protocol itself. The slider gives you the opportunity to choose the bit length to be used in the simulation." \
-                "\n\nLet's start with the simulation page. Here, you can progress through the simulation steps by clicking a button. Each step will display relevant information, allowing you to understand the progress and outcomes of the simulation. You have the flexibility to go back to the main screen whenever necessary or when the simulation is completed by using the “back” button on the top left side of the screen." \
-                "\n\nThe simulation page includes a “next” button for controlling the simulation steps, allowing you to move forward at your own pace. With each click, you will see a new frame in a scrollable area, providing insights into each bit's step in the simulation." \
-                "\n\nWithin the frame, you will find information about the random bit selected by Alice (the sender) and the corresponding random base. The same information is presented for Bob (the receiver). Additionally, the frame offers a brief explanation of the result for the current step of measurement, helping you grasp the significance of each step." \
-                "\n\nOn the information page, we have prepared a tabbed layout with different title buttons representing various subtopics. By selecting each button, you can access detailed pages that delve into specific aspects of the protocol. We highly recommend beginners to explore this page first, as it will provide a solid foundation of knowledge before engaging with the simulation." \
-                "\n\nThrough this simulation, we aim to enhance your understanding of QKD and the BB84 protocol, enabling you to appreciate the groundbreaking potential of quantum secure communication. So, let's dive in and unlock the secrets of this cutting-edge technology!"
+
+        text1 = """
+        We created an educative simulation where we explore the fascinating world of Quantum Key Distribution (QKD) and delve into the inner workings of the BB84 protocol. Our aim is to provide you with a comprehensive understanding of this revolutionary technology, empowering you to appreciate and harness the immense potential of quantum secure communication.
+
+        Our simulation consists of two main parts. The first one is the simulation page, where you can explore the step-by-step process of the protocol. And the second part is this information page, which provides detailed explanations about the protocol itself.
+
+        In the simulation page, you can progress through the simulation steps by clicking a button. Each step will display relevant information, allowing you to understand the progress and outcomes of the simulation. You have the flexibility to go back to the main screen whenever necessary or when the simulation is completed by using the “back” button on the top left side of the screen. The simulation page includes a “next” button for controlling the simulation steps, allowing you to move forward at your own pace. With each click, you see a new frame in a scrollable area, providing insights into each bit's step in the simulation. Within the frame, you will find information about the random bit selected by Alice (the sender) and the corresponding random base. The same information is presented for Bob (the receiver). Additionally, the frame offers a brief explanation of the result for the current step of measurement, helping you grasp the significance of each step.
+
+        On the information page, we have prepared detailed pages that delve into specific aspects of the protocol. We highly recommend beginners to explore about the protocol first, as it will provide a solid foundation of knowledge before engaging with the simulation.
+
+        Through this simulation, we aim to enhance your understanding of QKD and the BB84 protocol, enabling you to appreciate the groundbreaking potential of quantum secure communication. So, let's dive in and unlock the secrets of this cutting-edge technology!
+        """
+
+        # Load the image
+        image_path = "assets/img.png"
+        image = Image.open(image_path)
+        image = image.resize((600, 400))  # Resize the image if needed
+        image_tk = ImageTk.PhotoImage(image)
+
+        # Create a label to display the image
+        imageLabel = tk.Label(self.InfoFrameSim, image=image_tk)
+        imageLabel.pack(side=ctk.BOTTOM, anchor=ctk.CENTER, padx=4, pady=4)
+
         textMessage = tk.Message(self.InfoFrameSim, text=text1,
                                  foreground="white", font=textFont,
                                  width=int(screenWidth * 0.58),
                                  justify="left", bg=secondaryOrange)
         textMessage.pack(side=ctk.LEFT, anchor=ctk.N, padx=4, pady=4)
 
+        # Keep a reference to the image to prevent it from being garbage collected
+        textMessage.image = image_tk
+
         # Introduction Info Frame
         self.InfoFrameIntroduction = ctk.CTkScrollableFrame(self.generalInfoFrame, fg_color=secondaryOrange, corner_radius=9,
                                                             scrollbar_button_color=mainOrange,
                                                             scrollbar_button_hover_color=mainOrange)
-        text1 = "\nQuantum Key Distribution (QKD) and the BB84 protocol represent groundbreaking advancements in the field of secure communication. In an era where data breaches and cyberattacks are increasingly prevalent, QKD offers a promising solution by harnessing the principles of quantum mechanics to establish unbreakable cryptographic keys. At the heart of this technology lies the BB84 protocol, a pioneering method developed by Gilles Brassard and Charles Bennett in 1984."
-        text2 = "QKD leverages the bizarre and counterintuitive properties of quantum mechanics to provide an unparalleled level of security. Unlike classical encryption algorithms that rely on computational complexity, QKD achieves its security through the fundamental laws of physics. By leveraging the principles of quantum superposition and uncertainty, QKD ensures that any attempt to intercept or tamper with the communication will inevitably be detected."
-        text3 = "The BB84 protocol serves as a fundamental building block of QKD. It provides a robust framework for generating, transmitting, and verifying cryptographic keys between two parties, commonly referred to as Alice and Bob. Through a series of carefully orchestrated steps, BB84 enables the creation of a shared secret key that can be used to encrypt and decrypt messages securely."
+        text1 = "\n     Quantum Key Distribution (QKD) and the BB84 protocol represent groundbreaking advancements in the field of secure communication. In an era where data breaches and cyberattacks are increasingly prevalent, QKD offers a promising solution by harnessing the principles of quantum mechanics to establish unbreakable cryptographic keys. At the heart of this technology lies the BB84 protocol, a pioneering method developed by Gilles Brassard and Charles Bennett in 1984."
+        text2 = "       QKD leverages the bizarre and counterintuitive properties of quantum mechanics to provide an unparalleled level of security. Unlike classical encryption algorithms that rely on computational complexity, QKD achieves its security through the fundamental laws of physics. By leveraging the principles of quantum superposition and uncertainty, QKD ensures that any attempt to intercept or tamper with the communication will inevitably be detected. \n \n      The BB84 protocol serves as a fundamental building block of QKD. It provides a robust framework for generating, transmitting, and verifying cryptographic keys between two parties, commonly referred to as Alice and Bob. Through a series of carefully orchestrated steps, BB84 enables the creation of a shared secret key that can be used to encrypt and decrypt messages securely."
 
         textMessage1 = tk.Message(self.InfoFrameIntroduction, text=text1,
                                  foreground="white", font=textFont,
@@ -250,31 +268,19 @@ class InfoFrame(ctk.CTkFrame):
                                  width=int(screenWidth * 0.58),
                                  justify="left", bg=secondaryOrange)
         textMessage2.pack(fill=ctk.BOTH, padx=4, pady=4)
-        textMessage3 = tk.Message(self.InfoFrameIntroduction, text=text3,
-                                 foreground="white", font=textFont,
-                                 width=int(screenWidth * 0.58),
-                                 justify="left", bg=secondaryOrange)
-        textMessage3.pack(fill=ctk.BOTH, padx=4, pady=4)
 
         # QKD Info Frame
         self.InfoFrameQKD = ctk.CTkScrollableFrame(self.generalInfoFrame, fg_color=secondaryOrange, corner_radius=9,
                                                    scrollbar_button_color=mainOrange,
                                                    scrollbar_button_hover_color=mainOrange)
-        text1 = "\nQuantum Key Distribution (QKD) is an innovative cryptographic technology that relies on the principles of quantum physics to establish secure communication channels. At its core, QKD takes advantage of the unique properties exhibited by quantum systems, such as superposition and entanglement. Quantum physics, also known as quantum mechanics, is the branch of physics that describes the behavior of particles at the atomic and subatomic levels. It challenges classical physics by introducing principles that are fundamentally different from everyday experiences. Superposition allows particles to exist in multiple states simultaneously, while measurement collapses the superposition into a single state. Quantum entanglement enables correlations between particles even at a distance."
-        text2 = "The security of QKD is derived from the fact that any attempt to observe or measure the qubits during transmission will disturb their quantum states, revealing the presence of an eavesdropper. This fundamental principle of quantum physics ensures the confidentiality and integrity of the exchanged cryptographic keys."
-        text3 = "QKD represents a paradigm shift in secure communication, offering unconditional security based on the laws of quantum physics. It provides a robust framework for secure communication in a world increasingly challenged by sophisticated cyber threats, advancing us toward a future where secure communication is guaranteed through the principles of quantum physics. With the potential to revolutionize secure communication in domains such as finance, government, and defense, QKD and the BB84 protocol offer unbreakable security, opening new avenues for confidential and reliable information exchange and paving the way for a future where data can be transmitted and stored with absolute confidence."
-        text4 = "QKD protocols are fundamental frameworks that govern the secure exchange of cryptographic keys between two parties in Quantum Key Distribution. These protocols provide step-by-step procedures to ensure the confidentiality and integrity of the key exchange process. Notable QKD protocols include the BB84 protocol, which uses quantum states and random basis measurements, and the E91 protocol, which relies on entangled particles to establish secure keys. Other protocols like the B92, SARG04, and DPS protocols offer alternative approaches to address specific challenges or optimize certain aspects of QKD. Each protocol has its unique characteristics, strengths, and limitations, contributing to the diverse landscape of secure quantum communication."
+        text1 = "\n     Quantum Key Distribution (QKD) is an innovative cryptographic technology that relies on the principles of quantum physics to establish secure communication channels. At its core, QKD takes advantage of the unique properties exhibited by quantum systems, such as superposition and entanglement. Quantum physics, also known as quantum mechanics, is the branch of physics that describes the behavior of particles at the atomic and subatomic levels. It challenges classical physics by introducing principles that are fundamentally different from everyday experiences. Superposition allows particles to exist in multiple states simultaneously, while measurement collapses the superposition into a single state. Quantum entanglement enables correlations between particles even at a distance. \n\n       The security of QKD is derived from the fact that any attempt to observe or measure the qubits during transmission will disturb their quantum states, revealing the presence of an eavesdropper. This fundamental principle of quantum physics ensures the confidentiality and integrity of the exchanged cryptographic keys."
+        text3 = "\n       QKD represents a paradigm shift in secure communication, offering unconditional security based on the laws of quantum physics. It provides a robust framework for secure communication in a world increasingly challenged by sophisticated cyber threats, advancing us toward a future where secure communication is guaranteed through the principles of quantum physics. With the potential to revolutionize secure communication in domains such as finance, government, and defense, QKD and the BB84 protocol offer unbreakable security, opening new avenues for confidential and reliable information exchange and paving the way for a future where data can be transmitted and stored with absolute confidence. \n\n      QKD protocols are fundamental frameworks that govern the secure exchange of cryptographic keys between two parties in Quantum Key Distribution. These protocols provide step-by-step procedures to ensure the confidentiality and integrity of the key exchange process. Notable QKD protocols include the BB84 protocol, which uses quantum states and random basis measurements, and the E91 protocol, which relies on entangled particles to establish secure keys. Other protocols like the B92, SARG04, and DPS protocols offer alternative approaches to address specific challenges or optimize certain aspects of QKD. Each protocol has its unique characteristics, strengths, and limitations, contributing to the diverse landscape of secure quantum communication."
         textMessage1 = tk.Message(self.InfoFrameQKD, text=text1,
                                  foreground="white", font=textFont,
                                  width=int(screenWidth * 0.58),
                                  justify="left", bg=secondaryOrange)
         textMessage1.pack(fill=ctk.BOTH, padx=4, pady=4)
 
-        textMessage2 = tk.Message(self.InfoFrameQKD, text=text2,
-                                 foreground="white", font=textFont,
-                                 width=int(screenWidth * 0.58),
-                                 justify="left", bg=secondaryOrange)
-        textMessage2.pack(fill=ctk.BOTH, padx=4, pady=4)
 
         imagePath = Image.open('assets/infopage_photo2.jpg')
         image = ctk.CTkImage(light_image=imagePath, dark_image=imagePath,
@@ -294,29 +300,50 @@ class InfoFrame(ctk.CTkFrame):
                                   justify="left", bg=secondaryOrange)
         textMessage3.pack(fill=ctk.BOTH, padx=4, pady=4)
 
-        textMessage4 = tk.Message(self.InfoFrameQKD, text=text4,
-                                  foreground="white", font=textFont,
-                                  width=int(screenWidth * 0.58),
-                                  justify="left", bg=secondaryOrange)
-        textMessage4.pack(fill=ctk.BOTH, padx=4, pady=4)
 
         # BB84 Info Frame
         self.InfoFrameBB84 = ctk.CTkScrollableFrame(self.generalInfoFrame, fg_color=secondaryOrange, corner_radius=9,
                                                     scrollbar_button_color=mainOrange,
                                                     scrollbar_button_hover_color=mainOrange)
-        text1 = "\nThe BB84 protocol, devised by Bennett and Brassard in 1984, is a highly influential Quantum Key Distribution (QKD) protocol that facilitates secure key exchange between two parties, commonly known as Alice and Bob. It encompasses several crucial steps, including key generation, quantum encoding, transmission, basis measurement, announcement, comparison, error estimation, and key distillation."
-        text2 = "In BB84, Alice generates a random sequence of binary bits that she encodes into quantum states, using two mutually unbiased bases: rectilinear (Z) and diagonal (X). She then transmits the encoded qubits to Bob through a quantum channel. Upon receiving the qubits, Bob randomly selects a measurement basis for each qubit and performs measurements accordingly. He publicly announces the bases he used. Alice and Bob then compare a subset of their measurement results, discarding inconsistent ones due to mismatched bases. By estimating the error rate, they can identify potential eavesdropping attempts. Finally, Alice and Bob perform error correction and privacy amplification to distill a shared cryptographic key."
-        textMessage1 = tk.Message(self.InfoFrameBB84, text=text1,
-                                 foreground="white", font=textFont,
-                                 width=int(screenWidth * 0.58),
-                                 justify="left", bg=secondaryOrange)
-        textMessage1.pack(fill=ctk.BOTH, padx=4, pady=4)
 
-        textMessage2 = tk.Message(self.InfoFrameBB84, text=text2,
+        text1 = """
+        The BB84 protocol, devised by Bennett and Brassard in 1984, is a highly influential Quantum Key Distribution (QKD) protocol that facilitates secure key exchange between two parties, commonly known as Alice and Bob. It encompasses several crucial steps, including key generation, quantum encoding, transmission, basis measurement, announcement, comparison, error estimation, and key distillation.
+
+        1. Key Generation:
+            Alice generates a random sequence of binary bits, where each bit represents a key value (0 or 1). This sequence will be the basis for the cryptographic key.
+
+        2. Quantum Encoding:
+           Alice encodes each key value into quantum states, typically using two mutually unbiased bases: rectilinear (Z) and diagonal (X). The rectilinear basis corresponds to the standard computational basis (0 and 1 states), while the diagonal basis represents a superposition of 0 and 1 states.
+
+        3. Transmission:
+           Alice transmits the encoded qubits to Bob through a quantum channel, which could be a fiber optic cable or a free-space channel.
+
+        4. Basis Measurement:
+           Upon receiving the qubits, Bob randomly selects a measurement basis (either rectilinear or diagonal) for each qubit. This basis selection is kept secret from Alice.
+
+        5. Announcement:
+           Bob publicly announces the bases he used to measure the qubits, but he does not disclose the measurement outcomes.
+
+        6. Comparison:
+           Alice and Bob compare a subset of their measurement results. They only consider the qubits for which Bob measured in the same basis that Alice used for encoding. This comparison allows them to determine whether there was any interference or eavesdropping during transmission.
+
+        7. Error Estimation:
+           By comparing their measurement results, Alice and Bob can estimate the error rate, i.e., the number of bit discrepancies between their respective measurement outcomes. A high error rate may indicate the presence of an eavesdropper.
+
+        8. Privacy Amplification:
+           Alice and Bob perform error correction and privacy amplification to distill a final shared cryptographic key. Error correction algorithms are used to reconcile the bit discrepancies and ensure both parties have the same key. Privacy amplification reduces the information leakage, making the final key secure against potential eavesdroppers.
+
+        9. Secure Key:
+           The result of the BB84 protocol is a shared cryptographic key between Alice and Bob. This key can be used for secure communication, such as encryption and decryption, ensuring confidentiality between the two parties.\n
+           
+           The BB84 protocol leverages the principles of quantum mechanics to enable secure key exchange. It relies on the fundamental properties of quantum systems, such as the uncertainty principle and the no-cloning theorem, to detect any interception or tampering attempts during key transmission. By using quantum states to encode the key information and performing measurements in mutually unbiased bases, Alice and Bob can establish a shared key while detecting the presence of any potential eavesdroppers. The protocol's security lies in the laws of quantum physics, providing a means of secure communication even in the presence of adversaries.
+        """
+
+        textMessage1 = tk.Message(self.InfoFrameBB84, text=text1,
                                   foreground="white", font=textFont,
                                   width=int(screenWidth * 0.58),
                                   justify="left", bg=secondaryOrange)
-        textMessage2.pack(fill=ctk.BOTH, padx=4, pady=4)
+        textMessage1.pack(fill=ctk.BOTH, padx=4, pady=4)
 
         # Table Info Frame
         self.InfoFrameTable = ctk.CTkScrollableFrame(self.generalInfoFrame, fg_color=secondaryOrange, corner_radius=9,
