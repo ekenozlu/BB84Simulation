@@ -563,7 +563,7 @@ class SimulationFrame(ctk.CTkFrame):
         aliceImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 2].aliceBase == "X" \
             else './assets/rectilinearbase.png'
         aliceImg = ctk.CTkImage(light_image=Image.open(aliceImgPath), dark_image=Image.open(aliceImgPath),
-                                size=(int(screenWidth * 0.03), int(screenWidth * 0.03)))
+                                size=(int(screenWidth * 0.025), int(screenWidth * 0.025)))
         defLabel2 = ctk.CTkLabel(self.innerFrame, text="", image=aliceImg, corner_radius=9, fg_color=secondaryOrange)
         defLabel2.image = aliceImg
         defLabel2.grid(row=1, column=1, padx=3, pady=3, sticky="nsew")
@@ -580,7 +580,7 @@ class SimulationFrame(ctk.CTkFrame):
         bobImgPath = './assets/diagonalbase.png' if measurementList[self.currentSimStage - 2].bobBase == "X" \
             else './assets/rectilinearbase.png'
         bobImg = ctk.CTkImage(light_image=Image.open(bobImgPath), dark_image=Image.open(bobImgPath),
-                              size=(int(screenWidth * 0.03), int(screenWidth * 0.03)))
+                              size=(int(screenWidth * 0.025), int(screenWidth * 0.025)))
 
         defLabel4 = ctk.CTkLabel(self.innerFrame, text="", image=bobImg, corner_radius=9, fg_color=secondaryOrange)
         defLabel4.image = bobImg
